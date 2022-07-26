@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lista de Pessoas</title>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
+	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+
+<style type="text/css">
+		
+ 			body {  
+ 				background-color: rgba(240, 240, 240, 1);  
+			}  
+ 			
+ 			.caixa {
+				width: 100%;
+				height: 100vh;
+				display: flex; 
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.caixa2 {
+				margin: 10px;
+				width: 100%;
+				height: 100vh;
+				display: flex; 
+				justify-content: center;
+				align-items: top;
+/* 				background-color: rgba(200, 200, 200, 1); */
+			}
+			
+			.image-background {
+				position: absolute;
+			    width: 100vw;
+			    height: 100vh;
+			    z-index: -1;
+			}
+			
+			.card {
+			    background: #ffffffad;
+			    padding: 30px;
+			    border-radius: 10px;
+/* 			    border-color: black; */
+			}
+			
+			.centered2 {
+				display: block;
+				margin: 0px auto;
+				padding: 0px;
+			}	
+			
+			.rounded-circle {
+			width: 100px;
+			height: 80px;
+			
+			}
+			
+			.home-bar {
+			width: 50px;
+			height: 50px;
+			
+			}
+			
+			.pesq-nav {
+			background-color: rgba(200, 200, 200, 1); 
+			padding:  5px;
+			margin: 2px;
+			border-color: black;
+			align-items: center;
+			align-content: center;
+			}
+			
+	
+	</style>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+<!--  <img src="estilo/img/carro1.jpg" class="rounded-circle home-bar"> -->
+    <a class="navbar-brand" href="index">Garage Control</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="arearestrita">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Pessoas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            
+            <li><a class="dropdown-item" href="listapessoas">Lista Pessoas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="pessoas">Nova Pessoa</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Manutenção</a>
+        </li>
+       </ul> 
+<!--       <form class="d-flex" role="search"> -->
+<!--         <input class="form-control me-1" type="search" placeholder="Digite para busca" aria-label="Search"> -->
+<!--         <button class="btn btn-outline-success" type="submit">Procurar</button> -->
+<!--       </form> Essa parte acrescenta busca na barra -->
+       <ul class="nav justify-content-end">   
+         <li class="nav-item" >
+          <a class="nav-link active" href="logout">Sair do Sistema</a>
+        </li>
+         </ul>
+    </div>
+  </div>
+</nav>
+<body>
+<!-- <div class="row pesq-nav" > -->
+<!-- 			<br /><br /> -->
+<!-- 				<form action="pessoas" method="post" class="col s12" id="pessoas"> -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="input-field col s3"> -->
+<!-- 							<label for="nameBusca" class="active">Pesquisa por nome:</label> -->
+<!-- 								<input name="nameBusca" id="nameBusca" class="validate"> -->
+<!-- 								</div> -->
+								
+<!-- 								<div class="input-field col s3"> -->
+<!-- 							<label for="pesqsexo" class="active">Pesquisa Gênero</label> -->
+<!-- 						    <select	class="browser-default" name="pesqsexo" id="pesqsexo"> -->
+<!-- 								<option value="">-- Todos --</option> -->
+<!-- 								<option value="MASCULINO">Masculino</option> -->
+<!-- 								<option value="FEMININO">Feminino</option> -->
+<!-- 							</select> -->
+<!-- 							</div> -->
+<!-- 								<div class="input-field col s3"> -->
+<!--  								<input class="btn btn-success" type="submit" value="Buscar" -->
+<!--  										 onclick="document.getElementById('buscarPorNome').method='get'"> --> 
+<!-- 									<input class="btn btn-success" type="submit" value="Buscar" -->
+<!-- 										 onclick="pesquisarPessoa()"> -->
+<!-- 								</div> -->
+<!-- 								<div class="input-field col s3"> -->
+<!-- 								<input  class="btn btn-warning" type="submit" value="Imprimir PDF" /> -->
+<!-- 								 </div> -->
+<!-- 								</div> -->
+<!-- 							</form> -->
+<!-- 						</div> -->
+	
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de Pessoas</h1>
+		</div>
+		<div class="panel-body" style="height: 800px;overflow: scroll;">
+			<table class="table table-striped" id="tabelaresultados">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nome</th>
+						<th>CPF</th>
+						<th>RG</th>
+						<th>Sexo</th>
+						<th>CEP</th>
+						<th>Rua</th>
+						<th>Número</th>
+						<th>Bairro</th>
+						<th>Complemento</th>
+						<th>Cidade</th>
+						<th>UF</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pessoa : ${pessoas}">
+						<td th:text="${pessoa.id}"></td>
+						<td th:text="${pessoa.nome}"></td>
+						<td th:text="${pessoa.cpf}"></td>
+						<td th:text="${pessoa.rg}"></td>
+						<td th:text="${pessoa.sexo}"></td>
+						<td th:text="${pessoa.cep}"></td>
+						<td th:text="${pessoa.rua}"></td>
+						<td th:text="${pessoa.numero}"></td>
+						<td th:text="${pessoa.bairro}"></td>
+						<td th:text="${pessoa.comp}"></td>
+						<td th:text="${pessoa.cidade}"></td>
+						<td th:text="${pessoa.uf}"></td>
+						<td><a th:href="@{'/pessoas/' + ${pessoa.id}}">Editar</a></td>
+						<td><a th:href="@{/remove/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
+					</tr>
+				</tbody>
+			</table>
+<!-- 				<form class="form-inline" method="POST" th:object="${pessoa}" th:action="@{/pessoas}" style="margin: 20px 0"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 							<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" /> -->
+<!-- 							<input type="text" class="form-control" placeholder="CPF" th:field="*{cpf}"/> -->
+<!-- 							<input type="text" class="form-control" placeholder="R.G." th:field="*{rg}" /> -->
+<!-- 							<input type="text" class="form-control" placeholder="Sexo" th:field="*{sexo}"/> -->
+<!-- 							<input type="text" class="form-control" placeholder="CEP" th:field="*{cep}" /> -->
+<!-- 							<input type="text" class="form-control" placeholder="Rua" th:field="*{rua}"/> -->
+<!-- 							<input type="text" class="form-control" placeholder="Número" th:field="*{numero}"/> -->
+<!-- 							<input type="text" class="form-control" placeholder="Bairro" th:field="*{bairro}" /> -->
+<!-- 							<input type="text" class="form-control" placeholder="Complemento" th:field="*{comp}"/> -->
+<!-- 							<input type="text" class="form-control" placeholder="Cidade" th:field="*{cidade}" /> -->
+<!-- 							<input type="text" class="form-control" placeholder="Estado" th:field="*{uf}"/> -->
+<!-- 						<button type="submit" class="btn btn-primary">Adicionar</button> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
+		</div>
+	</div>
+	
+<!-- 	<div class="modal fade" id="modalPesquisarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Pessoa</h5> -->
+<!--         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!--       </div> -->
+<!--       <div class="modal-body"> -->
+<!--         <form> -->
+<!--           <div class="mb-3"> -->
+<!--             <label for="nameBusca" class="col-form-label">Informe o nome:</label> -->
+<!--             <input type="text" class="form-control" id="nameBusca" placeholder="nome ou parte do nome"> -->
+<!--           </div> -->
+<!--           <button type="button" class="btn btn-success" onclick="pesquisarPessoa()">Buscar</button> -->
+<!--         </form> -->
+
+<!-- 				<div style="height: 300px;overflow: scroll;"> -->
+<!-- 					<table class="table" id="tabelaresultados"> -->
+<!-- 						<thead> -->
+<!-- 							<tr> -->
+<!-- 								<th scope="col">ID</th> -->
+<!-- 								<th scope="col">Nome</th> -->
+<!-- 								<th scope="col">CPF</th> -->
+								
+<!-- 								<th scope="col">Editar</th> -->
+<!-- 								<th scope="col">Delete</th> -->
+<!-- 							</tr> -->
+<!-- 						</thead> -->
+<!-- 						<tbody> -->
+<!-- 						</tbody> -->
+<!-- 					</table> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
+<!--       <div class="modal-footer"> -->
+<!--         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<script type="text/javascript">
+
+
+function botaoDeletarDaTela(){
+	var id = $('#id').val();
+	
+	if(id != null && id.trim() != ''){
+	 deleteUser(id);
+	 document.getElementById('formCadastroUser').reset();
+	}
+}
+
+function apagaForm() {
+	document.getElementById("modalPesquisarUser").reset();
+	}
+
+
+function deleteUser(id){
+	
+	if(confirm('Deseja realmente deletar?')) {
+	
+	 $.ajax({
+			method : "DELETE",
+			url : "/api/pessoas/" + id,
+			data : "id=" + id ,
+			success : function(response) {
+				
+				//$('#'+ id).remove();
+			document.getElementById('formCadastroUser').reset();
+				alert("Registro Excluído com sucesso!");	  
+			}
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao deletar pessoa por id: " + xhr.responseText);
+		});
+	}	
+}
+
+	function pesquisarPessoa() {
+		
+		var nome = $('#nameBusca').val();
+
+		if (nome != null && nome.trim() != '') {
+
+			$.ajax({
+				method : "GET",
+				url : "/api/pessoas/buscarPorNome",
+				data : "nome=" + nome,
+				success : function(response) {
+
+				$('#tabelaresultados > tbody > tr').remove();
+
+				$("#id").val(response.id);
+
+				for (var i = 0; i < response.length; i++) {
+					$('#tabelaresultados > tbody')
+					.append(
+						'<tr id="'+response[i].id+'"><td>'
+								+ response[i].id
+								+ '</td><td>'
+								+ response[i].nome
+								+ '</td><td>'
+								+ response[i].cpf								
+								+ '</td><td><button type="button" onclick="colocarEmEdicao('
+								+ response[i].id
+								+ ')" class="btn btn-primary">Ver</button></td><td><button type="button" class="btn btn-danger" onclick="deleteUser('
+								+ response[i].id
+								+ ')">Delete</button></td></tr>');
+						}
+
+							}
+						}).fail(function(xhr, status, errorThrown) {
+					alert("Erro ao buscar Pessoa: " + xhr.responseText);
+				});
+
+		}
+	}
+
+	function colocarEmEdicao(id) {
+
+		$.ajax({
+			method : "GET",
+			url : "/api/pessoas" + id,
+			data : "id=" + id,
+			success : function(response) {
+
+				$("#id").val(response.id);
+				$("#nome").val(response.nome);
+				$("#cpf").val(response.cpf);
+				$("#rg").val(response.rg);
+				$("#sexo").val(response.sexo);
+				$("#cep").val(response.cep);
+				$("#rua").val(response.rua);
+				$("#numero").val(response.numero);
+				$("#bairro").val(response.bairro);
+				$("#comp").val(response.comp);
+				$("#cidade").val(response.cidade);
+				$("#uf").val(response.uf);
+
+				$('#modalPesquisarUser').modal('hide');
+				apagaForm();
+			}
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao buscar usuario por id: " + xhr.responseText);
+		});
+
+	}
+
+	function salvarUsuario() {
+
+		var id = $("#id").val();
+		var nome = $("#nome").val();
+		var cpf = $("#cpf").val();
+		var rg = $("#rg").val();
+		var sexo = $("#sexo").val();
+		var cep = $("#cep").val();
+		var rua = $("#rua").val();
+		var numero = $("#numero").val();
+		var bairro = $("#bairro").val();
+		var comp = $("#comp").val();
+		var cidade = $("#cidade").val();
+		var uf = $("#uf").val();
+
+		if (nome == null || nome != null && nome.trim() == '') {
+			$("#nome").focus();
+			alert('Informe o nome');
+			return;
+		}
+
+		if (cpf == null || cpf != null && cpf.trim() == '') {
+			$("#cpf").focus();
+			alert('Informe o CPF');
+			return;
+		}
+
+		$.ajax({
+			method : "POST",
+			url : "/api/pessoas",
+			data : JSON.stringify({
+				id : id,
+				nome : nome,
+				cpf : cpf,
+				rg : rg,
+				sexo : sexo,
+				cep : cep,
+				rua : rua,
+				numero : numero,
+				bairro : bairro,
+				comp : comp,
+				cidade : cidade,
+				uf : uf
+			}),
+			contentType : "application/json; charset=utf-8",
+			success : function(response) {
+				$("#id").val(response.id);
+				alert("Gravou com sucesso!");
+			}
+
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao salvar pessoa: " + xhr.responseText);
+		});
+
+	}
+</script>
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
