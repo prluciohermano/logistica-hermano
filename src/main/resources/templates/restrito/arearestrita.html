@@ -6,19 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <title>Garage Control System</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header>
+    <header class="restrito">
         <div class="content">
             <nav>
                 <p class="brand">Garage <strong>Control</strong></p>
+                
                 <ul>
-                    <li><a href="#catalog">Catálogo</a></li>
-                    <li><a href="#about">Sobre</a></li>
-                    <li><a href="#features">Recursos</a></li>
-                    <li><a href="/login"><button>Área Restrita</button></a>
+                    <li><a href="/restrito/listapessoas">Pessoas</a></li>
+                    <li><a href="#">Produtos</a></li>
+                    <li><a href="#">Manutenção</a></li>
+                    <li><a href="#">Relatórios</a></li>
+                    <li><a href="#">Configuração</a></li>
+                    <li><a href="/logout"><button>Sair</button></a>
                 </ul>
+                <h3 class="arearestrita">Área Restrita</h3>
             </nav>
             <div class="header-block">
                 <div class="text">
@@ -27,10 +31,11 @@
 
                     </p>
                 </div>
-                <img src="images/car-header.png" alt="Car">
+                <img src="../images/car-header.png" alt="Car">
             </div>
         </div>
     </header>
+    
     <section class="catalog" id="catalog">
         <div class="content">
             <div class="title-wrapper-catalog">
@@ -43,7 +48,7 @@
             </div>
             <div class="card-wrapper">
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -52,7 +57,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -61,7 +66,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -70,7 +75,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -79,7 +84,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -88,7 +93,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -97,7 +102,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -106,7 +111,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -115,7 +120,7 @@
                     </div>
                 </div>
                 <div class="card-item">
-                    <img src="images/car-card.png" alt="Car">
+                    <img src="../images/car-card.png" alt="Car">
                     <div class="card-content">
                         <h3>Audi Supra TT</h3>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis.
@@ -136,7 +141,7 @@
             </div>
             <div class="about-content">
                 <div class="left">
-                    <img src="images/about.png" alt="About" >
+                    <img src="../images/about.png" alt="About" >
                 </div>
                 <div class="right">
                     <h3>Tenha mais tecnologia e mobilidade</h3>
@@ -164,42 +169,42 @@
             </div>
             <div class="feature-card-block">
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
                     </div>
                 </div>
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
                     </div>
                 </div>
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
                     </div>
                 </div>
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
                     </div>
                 </div>
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
                     </div>
                 </div>
                 <div class="feature-card-item">
-                    <img src="images/feature-planet.png" alt="Recursos">
+                    <img src="../images/feature-planet.png" alt="Recursos">
                     <div class="feature-text-content">
                         <h3>Título</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, assumenda?</p>
@@ -227,9 +232,9 @@
                     <h4>Siga-nos</h4>
                     <div class="social-icons">
                         <a href="https://www.instagram.com/prluciohermano" target="_blanck">
-                        		<img src="images/instagram.png" alt="Instagram"></a>
+                        		<img src="../images/instagram.png" alt="Instagram"></a>
                         <a href="https://www.facebook.com/prluciohermano" target="_blanck">
-                        		<img src="images/facebook.png" alt="Facebook"></a>
+                        		<img src="../images/facebook.png" alt="Facebook"></a>
                     </div>
                 </div>
                 <div class="footer-contact">

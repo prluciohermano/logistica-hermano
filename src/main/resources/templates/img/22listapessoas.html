@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lista de Pessoas</title>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
+	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+
+<style type="text/css">
+		
+ 			body {  
+ 				background-color: rgba(240, 240, 240, 1);  
+			}  
+ 			
+ 			.caixa {
+				width: 100%;
+				height: 100vh;
+				display: flex; 
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.caixa2 {
+				margin: 10px;
+				width: 100%;
+				height: 100vh;
+				display: flex; 
+				justify-content: center;
+				align-items: top;
+/* 				background-color: rgba(200, 200, 200, 1); */
+			}
+			
+			.image-background {
+				position: absolute;
+			    width: 100vw;
+			    height: 100vh;
+			    z-index: -1;
+			}
+			
+			.card {
+			    background: #ffffffad;
+			    padding: 30px;
+			    border-radius: 10px;
+/* 			    border-color: black; */
+			}
+			
+			.centered2 {
+				display: block;
+				margin: 0px auto;
+				padding: 0px;
+			}	
+			
+			.rounded-circle {
+			width: 100px;
+			height: 80px;
+			
+			}
+			
+			.home-bar {
+			width: 50px;
+			height: 50px;
+			
+			}
+			
+			.pesq-nav {
+			background-color: rgba(200, 200, 200, 1); 
+			padding:  5px;
+			margin: 2px;
+			border-color: black;
+			align-items: center;
+			align-content: center;
+			}
+			
+	
+	</style>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+<!--  <img src="estilo/img/carro1.jpg" class="rounded-circle home-bar"> -->
+    <a class="navbar-brand" href="/">Garage Control</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="arearestrita">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Pessoas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            
+            <li><a class="dropdown-item" href="listapessoas">Lista Pessoas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="pessoas">Nova Pessoa</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Manutenção</a>
+        </li>
+       </ul> 
+       <ul class="nav justify-content-end">   
+         <li class="nav-item" >
+          <a class="nav-link active" href="logout">Sair do Sistema</a>
+        </li>
+         </ul>
+    </div>
+  </div>
+</nav>
+<body>
+	<div class="box container">
+		<h1>Cadastro de Pessoas</h1>
+		<form action="" method="POST" >
+			<input type="text" class="nome" name="nome" placeholder="Nome"  />
+			<input type="text" class="cpf" name="cpf" placeholder="CPF" />
+			<input type="text" class="rg" name="rg" placeholder="R.G." />
+			<input type="text" class="sexo" name="sexo" placeholder="Sexo" />
+			<input type="text" class="cep" name="cep" placeholder="CEP" />
+			<input type="text" class="rua" name="rua" placeholder="Rua" />
+			<input type="text" class="numero" name="numero" placeholder="Número" />
+			<input type="text" class="bairro" name="bairro" placeholder="Bairro" />
+			<input type="text" class="comp" name="comp" placeholder="Complemento" />
+			<input type="text" class="cidade" name="cidade" placeholder="Cidade" />
+			<input type="text" class="uf" name="uf" placeholder="Estado" />
+				<button>Adicionar</button>
+		</form>
+	</div>
+
+	
+
+<script type="text/javascript">
+
+const formulario = document.querySelector("form");
+const Inome = document.querySelector(".nome");
+const Icpf = document.querySelector(".cpf");
+const Irg = document.querySelector(".rg");
+const Isexo = document.querySelector(".sexo");
+const Icep = document.querySelector(".cep");
+const Irua = document.querySelector(".rua");
+const Inumero = document.querySelector(".numero");
+const Ibairro = document.querySelector(".bairro");
+const Icomp = document.querySelector(".comp");
+const Icidade = document.querySelector(".cidade");
+const Iuf = document.querySelector(".uf");
+
+function cadastrar () {
+	fetch("https://hermanogarage-api.herokuapp.com/api/pessoas",
+			{
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: "POST",
+				body: JSON.stringify({
+						nome: Inome.value,
+						cpf: Icpf.value,
+						rg: Irg.value,
+						sexo: Isexo.value,
+						cep: Icep.value,
+						rua: Irua.value,
+						numero: Inumero.value,
+						bairro: Ibairro.value,
+						comp: Icomp.value,
+						cidade: Icidade.value,
+						uf: Iuf.value
+					})
+			})
+			.then(function (res) {console.log(res) })
+			.catch(function (res) { console.log(res) })
+};
+
+function limpar() {
+	Inome.value = "";
+	Icpf.value = "";
+	Irg.value = "";
+	Isexo.value = "";
+	Icep.value = "";
+	Irua.value = "";
+	Inumero.value = "";
+	Ibairro.value = "";
+	Icomp.value = "";
+	Icidade.value = "";
+	Iuf.value = "";
+};
+
+formulario.addEventListener('submit', function(event) {
+	event.preventDefault();
+	
+	cadastrar();
+	limpar();
+});
+
+
+</script>
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

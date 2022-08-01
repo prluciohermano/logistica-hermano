@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+
+</head>
+<body>
+	<h1>Página de LOGIN</h1>
+	
+	<div th:if="${param.error}">
+		Senha ou Login inválido!
+	</div>
+	
+	<div th:if="${param.logout}">
+		Você está desconectado!
+	</div>
+	
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label>Username: <input type="text" name="username"/></label>
+		</div>
+		
+		<div>
+			<label>Password: <input type="password" name="password"/></label>
+		</div>
+	
+		<div><input type="submit" value="Entrar"></div>
+<!-- 	<div><input type="submit" value="Entrar" th:action="@{/listapessoas}"></div> -->
+	</form>
+	
+</body>
+</html>

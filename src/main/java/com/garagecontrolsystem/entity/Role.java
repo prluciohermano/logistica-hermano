@@ -1,5 +1,5 @@
-package com.garagecontrolsystem.entity;
-
-public class Role {
-
-}
+//package com.garagecontrolsystem.entity;
+//
+//public class Role {
+//
+//}

@@ -2,54 +2,52 @@ package com.garagecontrolsystem.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import javax.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.garagecontrolsystem.entity.Pessoa;
+import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.repository.PessoaRepository;
-
 
 @Service
 public class PessoaService {
 	
-	@Autowired
-	private PessoaRepository pessoaRepository;
+	final PessoaRepository pessoaRepository;
 	
-	
-	public List<Pessoa> findAll() {
-		return pessoaRepository.findAll();
+	public PessoaService(PessoaRepository pessoaRepository) {
+		this.pessoaRepository = pessoaRepository;
 	}
 	
+	@Transactional
+    public PessoaModel save(PessoaModel pessoa) {
+        return pessoaRepository.save(pessoa);
+    }
 	
-	public Optional<Pessoa> findById(Long id) {
+	public Page<PessoaModel> findAll(Pageable pageable) {
+		return pessoaRepository.findAll(pageable);
+	}
+	
+	public Optional<PessoaModel> findById(UUID id) {
 		return pessoaRepository.findById(id);
 	}
-
 	
-	public Pessoa save(Pessoa pessoa) {
-		return pessoaRepository.save(pessoa);
+
+	public List<PessoaModel> findAll() {
+		return pessoaRepository.findAll();
 	}
 
-	
-	public ResponseEntity<Pessoa> update(Pessoa pessoa) {
-		return ResponseEntity.ok(pessoaRepository.save(pessoa));	
+	@Transactional
+	public void deleteById(UUID pessoaId) {
+		pessoaRepository.deleteById(pessoaId);
 	}
 
-	
-	public ResponseEntity<Pessoa> deleteById(Long id) {
-		if(pessoaRepository.existsById(id)) {
-			pessoaRepository.deleteById(id);
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
+	public List<PessoaModel> findPessoaByName(String nameBusca) {
+		return pessoaRepository.findPessoaByName(nameBusca);
 	}
 
-
-	public List<Pessoa> buscarPorNome(String nomePessoa) {
-		return pessoaRepository.buscarPorNome(nomePessoa);
-
-		}
 	}
 

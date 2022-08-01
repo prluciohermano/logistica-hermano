@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lista de Pessoas</title>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
+	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+	
+	<link rel="stylesheet" href="../css/materialize.css">
+    <link rel="stylesheet" href="../css/materialize.min.css">
+
+<style type="text/css">
+		
+body {  
+	background-color: rgba(253, 253, 253, .5);  
+}  
+	
+.caixa {
+	width: 100%;
+	height: 100vh;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+}
+
+.caixa2 {
+	margin: 10px;
+	width: 100%;
+	height: 100vh;
+	display: flex; 
+	justify-content: center;
+	align-items: top;
+		background-color: rgba(200, 200, 200, 1);
+}
+			
+.image-background {
+	position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.card {
+    background: #ffffffad;
+    padding: 30px;
+    border-radius: 10px;
+    border-color: black;
+}
+			
+.centered2 {
+	display: block;
+	margin: 0px auto;
+	padding: 0px;
+}	
+
+.rounded-circle {
+	width: 100px;
+	height: 80px;
+
+}
+
+.home-bar {
+	width: 50px;
+	height: 50px;
+
+}
+
+.pesq-nav {
+	width: 100%;
+	height: 80px;
+	background-color: rgba(100, 220, 140, 0.5); 
+	padding:  10px;
+	margin: 0px;
+	margin-top: 0px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.pesq-nav2 {
+	background-color: rgba(100, 220, 140, 0.5); 
+	padding:  5px;
+	margin: 8px 0px;
+	text-align: left;
+}
+
+.pesq-nav2 h5 {
+	margin: 5px;
+}
+
+</style>
+	
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+    <a class="navbar-brand" href="/">Garage Control</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="arearestrita">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Pessoas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            
+            <li><a class="dropdown-item" href="listapessoas">Lista Pessoas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="pessoas">Nova Pessoa</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Manutenção</a>
+        </li>
+       </ul> 
+<!--       <form class="d-flex" role="search"> -->
+<!--         <input class="form-control me-1" type="search" placeholder="Digite para busca" aria-label="Search"> -->
+<!--         <button class="btn btn-outline-success" type="submit">Procurar</button> -->
+<!--       </form> Essa parte acrescenta busca na barra -->
+       <ul class="nav justify-content-end">   
+         <li class="nav-item" >
+          <a class="nav-link active" href="logout">Sair do Sistema</a>
+        </li>
+         </ul>
+    </div>
+  </div>
+</nav>
+<body>
+<div class="pesq-nav" >
+<br /><br />
+	<form action="pesquisarpessoa" method="post" class="col s12" id="listapessoas">
+		<div class="row">
+			<div class="input-field col s3">
+				<label for="nameBusca" class="active">Pesquisa por nome:</label>
+					<input name="nameBusca" id="nameBusca" class="validate">
+					
+					</div>
+					
+					<div class="input-field col s3">
+				<label for="pesqsexo" class="active">Pesquisa Gênero</label>
+			    <select	class="browser-default" name="pesqsexo" id="pesqsexo">
+					<option value="">-- Todos --</option>
+					<option value="MASCULINO">Masculino</option>
+					<option value="FEMININO">Feminino</option>
+				</select>
+				</div>
+					<div class="input-field col s4">
+						<input class="btn btn-success" type="submit"  value="Buscar">
+<!-- 								 onclick="document.getElementById('buscarPorNome').method='get'">  -->
+<!-- 					<input class="btn btn-success" type="submit" value="Buscar" -->
+<!-- 						 onclick="pesquisarPessoa()">  -->
+					</div>
+					<div class="input-field col s3">
+					<input  class="btn btn-warning" type="submit" value="Imprimir PDF" />
+					 </div>
+					</div>
+				</form>
+			</div>
+
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h5 class="panel-title">Lista de Pessoas</h5>
+		</div>
+		<div class="panel-body" style="height: 470px;overflow: scroll;"> 
+			<table class="table table-striped" id="tabelaresultados">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>CPF</th>
+						<th>RG</th>
+						<th>Sexo</th>
+						<th>CEP</th>
+						<th>Rua</th>
+						<th>Número</th>
+						<th>Bairro</th>
+						<th>Complemento</th>
+						<th>Cidade</th>
+						<th>UF</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+			<tbody>
+		<tr th:each="pessoa : ${pessoas}">
+		
+		<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.pessoaId})}">
+		 <span th:text="${pessoa.nome}"></span></a></td>
+		 
+		<td th:text="${pessoa.cpf}"></td>
+		<td th:text="${pessoa.rg}"></td>
+		<td th:text="${pessoa.sexo}"></td>
+		<td th:text="${pessoa.cep}"></td>
+		<td th:text="${pessoa.rua}"></td>
+		<td th:text="${pessoa.numero}"></td>
+		<td th:text="${pessoa.bairro}"></td>
+		<td th:text="${pessoa.comp}"></td>
+		<td th:text="${pessoa.cidade}"></td>
+		<td th:text="${pessoa.uf}"></td>
+		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Editar</a></td>
+		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Excluir</a></td>
+			</tr>
+				</tbody>
+			</table>
+			
+<!-- 			<button type="submit" class="btn btn-danger">Consultar Pessoa</button> -->
+<!-- 			<a href="/listapessoas">Lista</a> -->
+		</div>
+			<div class="pesq-nav2" >
+			<h5 class="panel-title">Cadastrar Pessoa</h5></div>
+	<br>
+		<div th:each = "m : ${msg}"  style="color: red;"> <!-- * Mensagem de erros vinda de Annotations do Model */ -->
+			<span th:text = "${m}"></span>
+		</div>
+	<br>
+		<div class="row">
+<form id="formpessoa" class="col s12" action="salvarpessoa" method="post" th:object="${pessoaobj}" style="margin: 20px 0">
+<!-- 	<div class="form-group"> th:object="${pessoaobj}" recebe o objeto para EDITAR -->
+	<div class="row">
+		<div class="input-fiel col s3">
+			<input type="hidden" class="form-control" placeholder="Id" name="pessoaId" th:field="*{pessoaId}" readonly="readonly"/>
+			<input type="text" class="" placeholder="Nome" name="nome" th:field="*{nome}"/>
+			<input type="text" class="" placeholder="CPF" name="cpf" th:field="*{cpf}"/>
+			<input type="text" class="" placeholder="R.G." name="rg" th:field="*{rg}"/>
+		</div>
+		<div class="input-fiel col s3">
+			<input type="text" class="" placeholder="Sexo" name="sexo" th:field="*{sexo}" />
+			<input type="text" class="" placeholder="CEP" name="cep" th:field="*{cep}"/>
+			<input type="text" class="" placeholder="Rua" name="rua" th:field="*{rua}"/>
+		
+		</div>
+		<div class="input-fiel col s3">
+			<input type="text" class="" placeholder="Número" name="numero" th:field="*{numero}"/>
+			<input type="text" class="" placeholder="Bairro" name="bairro" th:field="*{bairro}"/>
+			<input type="text" class="" placeholder="Complemento" name="comp" th:field="*{comp}"/>
+		</div>
+		<div class="input-fiel col s3">
+			<input type="text" class="" placeholder="Cidade" name="cidade" th:field="*{cidade}"/>
+			<input type="text" class="" placeholder="Estado" name="uf" th:field="*{uf}"/>
+			</div>
+		
+	</div>
+	
+	<button type="submit" class="waves-effect waves-light btn">Adicionar</button>
+	<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
+		</form>
+			</div>
+				</div>
+	
+<!-- 	<div class="modal fade" id="modalPesquisarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Pessoa</h5> -->
+<!--         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!--       </div> -->
+<!--       <div class="modal-body"> -->
+<!--         <form> -->
+<!--           <div class="mb-3"> -->
+<!--             <label for="nameBusca" class="col-form-label">Informe o nome:</label> -->
+<!--             <input type="text" class="form-control" id="nameBusca" placeholder="nome ou parte do nome"> -->
+<!--           </div> -->
+<!--           <button type="button" class="btn btn-success" onclick="pesquisarPessoa()">Buscar</button> -->
+<!--         </form> -->
+
+<!-- 				<div style="height: 300px;overflow: scroll;"> -->
+<!-- 					<table class="table" id="tabelaresultados"> -->
+<!-- 						<thead> -->
+<!-- 							<tr> -->
+<!-- 								<th scope="col">ID</th> -->
+<!-- 								<th scope="col">Nome</th> -->
+<!-- 								<th scope="col">CPF</th> -->
+								
+<!-- 								<th scope="col">Editar</th> -->
+<!-- 								<th scope="col">Delete</th> -->
+<!-- 							</tr> -->
+<!-- 						</thead> -->
+<!-- 						<tbody> -->
+<!-- 						</tbody> -->
+<!-- 					</table> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
+<!--       <div class="modal-footer"> -->
+<!--         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<!-- <script type="text/javascript"> -->
+
+<script type="text/javascript" src="../cjs/materialize.js"></script>
+<script type="text/javascript" src="../cjs/materialize.min.js"></script>
+</body>
+</html>
