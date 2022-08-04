@@ -29,7 +29,7 @@
 //					.defaultSuccessUrl("/pessoas")
 //					.and().cors();
 //		
-//		http.addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class);
+//		
 //		
 //	}
 //	

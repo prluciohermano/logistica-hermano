@@ -28,6 +28,8 @@ import com.garagecontrolsystem.dto.GarageBoxDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
 import com.garagecontrolsystem.service.GarageBoxService;
 
+import lombok.var;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/garage-box")

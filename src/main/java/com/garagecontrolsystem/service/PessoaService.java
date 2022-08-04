@@ -48,6 +48,14 @@ public class PessoaService {
 	public List<PessoaModel> findPessoaByName(String nameBusca) {
 		return pessoaRepository.findPessoaByName(nameBusca);
 	}
-
+	
+	public List<PessoaModel> findPessoaByNameSexo(String nameBusca, String sexo) {
+		return pessoaRepository.findPessoaByNameSexo(nameBusca, sexo);
 	}
+
+	public List<PessoaModel> findPessoaBySexo(String pesqsexo) {
+		return pessoaRepository.findPessoaBySexo(pesqsexo);
+	}
+
+}
 

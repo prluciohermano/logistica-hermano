@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Lista de Pessoas</title>
 	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
 	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
 	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
 	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
-	
-	<link rel="stylesheet" href="../css/materialize.css">
-    <link rel="stylesheet" href="../css/materialize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
 <style type="text/css">
 		
@@ -108,40 +108,36 @@ body {
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="arearestrita">Home</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Pessoas
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            
-            <li><a class="dropdown-item" href="listapessoas">Lista Pessoas</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="pessoas">Nova Pessoa</a></li>
-          </ul>
+         <li class="nav-item">
+          <a class="nav-link active" href="listapessoas">Pessoas</a>
         </li>
+          <li class="nav-item">
+         
+            <li class="nav-item">
+          <a class="nav-link active" href="listapessoas">Produtos</a>
+        	</li>
+  
         <li class="nav-item">
-          <a class="nav-link active" href="index">Produtos</a>
+          <a class="nav-link active" href="index">Relatórios</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="index">Manutenção</a>
         </li>
        </ul> 
-<!--       <form class="d-flex" role="search"> -->
-<!--         <input class="form-control me-1" type="search" placeholder="Digite para busca" aria-label="Search"> -->
-<!--         <button class="btn btn-outline-success" type="submit">Procurar</button> -->
-<!--       </form> Essa parte acrescenta busca na barra -->
        <ul class="nav justify-content-end">   
          <li class="nav-item" >
-          <a class="nav-link active" href="logout">Sair do Sistema</a>
+          <a class="nav-link active" href="/logout">Sair do Sistema</a>
         </li>
          </ul>
     </div>
   </div>
 </nav>
 <body>
-<div class="pesq-nav" >
-<br /><br />
-	<form action="pesquisarpessoa" method="post" class="col s12" id="listapessoas">
+<fieldset>
+
+	<div class="pesq-nav" >
+	<br /><br />
+	<form action="pesquisarpessoa" method="post" class="col s12" id="pesquisarpessoa">
 		<div class="row">
 			<div class="input-field col s3">
 				<label for="nameBusca" class="active">Pesquisa por nome:</label>
@@ -150,26 +146,30 @@ body {
 					</div>
 					
 					<div class="input-field col s3">
-				<label for="pesqsexo" class="active">Pesquisa Gênero</label>
-			    <select	class="browser-default" name="pesqsexo" id="pesqsexo">
-					<option value="">-- Todos --</option>
-					<option value="MASCULINO">Masculino</option>
-					<option value="FEMININO">Feminino</option>
-				</select>
+					<label for="pesqsexo" class="active">Pesquisa Sexo</label>
+				    	<select	class="browser-default" name="pesqsexo" id="pesqsexo">
+							<option value="">--[ Todos ]--</option>
+							<option value="MASCULINO">Masculino</option>
+							<option value="FEMININO">Feminino</option>
+						</select>
 				</div>
 					<div class="input-field col s4">
-						<input class="btn btn-success" type="submit"  value="Buscar">
-<!-- 								 onclick="document.getElementById('buscarPorNome').method='get'">  -->
+						<input class="btn btn-success" type="submit"  value="Buscar"
+								 onclick="document.getElementById('buscarPorNome').method='get'"> 
 <!-- 					<input class="btn btn-success" type="submit" value="Buscar" -->
 <!-- 						 onclick="pesquisarPessoa()">  -->
 					</div>
+			
+					
 					<div class="input-field col s3">
-					<input  class="btn btn-warning" type="submit" value="Imprimir PDF" />
+					<input  class="btn btn-warning" type="submit" value="Imprimir PDF"
+							onclick="document.getElementById('pesquisarpessoa').method='get'" />
 					 </div>
 					</div>
 				</form>
 			</div>
-
+</fieldset>
+	<fieldset>
 	<div class="panel panel-default" style="margin: 10px">
 		<div class="panel-heading">
 			<h5 class="panel-title">Lista de Pessoas</h5>
@@ -189,6 +189,8 @@ body {
 						<th>Complemento</th>
 						<th>Cidade</th>
 						<th>UF</th>
+						<th>Tipo</th>
+						<th>Cargo</th>
 						<th>Editar</th>
 						<th>Excluir</th>
 					</tr>
@@ -209,22 +211,24 @@ body {
 		<td th:text="${pessoa.comp}"></td>
 		<td th:text="${pessoa.cidade}"></td>
 		<td th:text="${pessoa.uf}"></td>
+		<td th:text="${pessoa.nome}"></td>
+		<td th:text="${pessoa.cargo}"></td>
 		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Editar</a></td>
 		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Excluir</a></td>
 			</tr>
-				</tbody>
-			</table>
-			
-<!-- 			<button type="submit" class="btn btn-danger">Consultar Pessoa</button> -->
-<!-- 			<a href="/listapessoas">Lista</a> -->
-		</div>
+		</tbody>
+	</table>
+	</div>
+	</div>
+</fieldset>
+	<fieldset>
 			<div class="pesq-nav2" >
 			<h5 class="panel-title">Cadastrar Pessoa</h5></div>
-	<br>
+	
 		<div th:each = "m : ${msg}"  style="color: red;"> <!-- * Mensagem de erros vinda de Annotations do Model */ -->
 			<span th:text = "${m}"></span>
 		</div>
-	<br>
+	
 		<div class="row">
 <form id="formpessoa" class="col s12" action="salvarpessoa" method="post" th:object="${pessoaobj}" style="margin: 20px 0">
 <!-- 	<div class="form-group"> th:object="${pessoaobj}" recebe o objeto para EDITAR -->
@@ -234,74 +238,121 @@ body {
 			<input type="text" class="" placeholder="Nome" name="nome" th:field="*{nome}"/>
 			<input type="text" class="" placeholder="CPF" name="cpf" th:field="*{cpf}"/>
 			<input type="text" class="" placeholder="R.G." name="rg" th:field="*{rg}"/>
-		</div>
-		<div class="input-fiel col s3">
-			<input type="text" class="" placeholder="Sexo" name="sexo" th:field="*{sexo}" />
 			<input type="text" class="" placeholder="CEP" name="cep" th:field="*{cep}"/>
 			<input type="text" class="" placeholder="Rua" name="rua" th:field="*{rua}"/>
-		
 		</div>
 		<div class="input-fiel col s3">
 			<input type="text" class="" placeholder="Número" name="numero" th:field="*{numero}"/>
 			<input type="text" class="" placeholder="Bairro" name="bairro" th:field="*{bairro}"/>
 			<input type="text" class="" placeholder="Complemento" name="comp" th:field="*{comp}"/>
-		</div>
-		<div class="input-fiel col s3">
 			<input type="text" class="" placeholder="Cidade" name="cidade" th:field="*{cidade}"/>
 			<input type="text" class="" placeholder="Estado" name="uf" th:field="*{uf}"/>
+		</div>
+		<div class="input-fiel col s3">
+			<label for="tipospessoa" class="active" >Tipo</label>
+			<select class="browser-default" th:field="*{tipospessoa}" id="tipospessoa">
+			<option value="" selected>Tipo</option>
+				<option th:each = "p : ${tipos}" th:value="${p.id}" th:text="${p.nome}">
+			</select>
+						
+			<label for="cargo" class="active" >Cargo</label>
+			<select class="browser-default" th:field="*{cargo}" id="cargo">
+			<option value="" selected>Cargo</option>
+				<option th:each = "c : ${T(com.garagecontrolsystem.entity.Cargo).values()}"
+					 			th:value="${c}" th:text="${c.nome}">
+			</select>
+			
+			<label for="sexo" class="active" >Sexo</label>
+			<select class="browser-default" th:field="*{sexo}">
+				<option value="" selected>Sexo</option>
+				<option value="MASCULINO" th:text="Masculino"/>
+				<option value="FEMININO" th:text="Feminino"/>
+			</select>
+			
+		</div>
+		<div class="input-fiel col s3">
+			
+			<br><br><br><br><br><br><br><br><br><br>
+			<button type="submit" class="waves-effect waves-light btn">Salvar</button>
+			<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
+		
 			</div>
 		
 	</div>
 	
-	<button type="submit" class="waves-effect waves-light btn">Adicionar</button>
-	<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
-		</form>
+	</form>
 			</div>
-				</div>
-	
-<!-- 	<div class="modal fade" id="modalPesquisarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!--   <div class="modal-dialog"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Pessoa</h5> -->
-<!--         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!--         <form> -->
-<!--           <div class="mb-3"> -->
-<!--             <label for="nameBusca" class="col-form-label">Informe o nome:</label> -->
-<!--             <input type="text" class="form-control" id="nameBusca" placeholder="nome ou parte do nome"> -->
-<!--           </div> -->
-<!--           <button type="button" class="btn btn-success" onclick="pesquisarPessoa()">Buscar</button> -->
-<!--         </form> -->
+				
+				</fieldset>
+<!-- Adicionando Javascript -->
+    <script type="text/javascript" >
 
-<!-- 				<div style="height: 300px;overflow: scroll;"> -->
-<!-- 					<table class="table" id="tabelaresultados"> -->
-<!-- 						<thead> -->
-<!-- 							<tr> -->
-<!-- 								<th scope="col">ID</th> -->
-<!-- 								<th scope="col">Nome</th> -->
-<!-- 								<th scope="col">CPF</th> -->
-								
-<!-- 								<th scope="col">Editar</th> -->
-<!-- 								<th scope="col">Delete</th> -->
-<!-- 							</tr> -->
-<!-- 						</thead> -->
-<!-- 						<tbody> -->
-<!-- 						</tbody> -->
-<!-- 					</table> -->
-<!-- 				</div> -->
-<!-- 				</div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
 
 <!-- <script type="text/javascript"> -->
-
-<script type="text/javascript" src="../cjs/materialize.js"></script>
-<script type="text/javascript" src="../cjs/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

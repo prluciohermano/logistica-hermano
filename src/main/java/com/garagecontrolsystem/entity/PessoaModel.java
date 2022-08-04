@@ -7,10 +7,12 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -25,6 +27,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "TB_PESSOA")
 public class PessoaModel implements Serializable {
+	public TipoPessoaModel getTipospessoa() {
+		return tipospessoa;
+	}
+
+	public void setTipospessoa(TipoPessoaModel tipospessoa) {
+		this.tipospessoa = tipospessoa;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -76,5 +86,30 @@ public class PessoaModel implements Serializable {
 		
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<TelefoneModel> telefones;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST) /* a variável tipospessoa está linkado com o atributo th:field="*{tipospessoa}" da página listapessoas*/
+	private TipoPessoaModel tipospessoa;
+	
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
+	
+	
+	public List<TelefoneModel> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<TelefoneModel> telefones) {
+		this.telefones = telefones;
+	}
+
+	public void setTipoPessoaModel(TipoPessoaModel tipospessoa) {
+		this.tipospessoa = tipospessoa;
+	}
+	
+
+	public TipoPessoaModel getTipoPessoaModel() {
+		return tipospessoa;
+		
+	}
 	
 }

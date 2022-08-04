@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +17,11 @@
                 <p class="brand">Garage <strong>Control</strong></p>
                 
                 <ul>
-                    <li><a href="/restrito/listapessoas">Pessoas</a></li>
+                    <li><a href="listapessoas" sec:authorize="hasRole('ROLE_USER')">Pessoas</a></li>
                     <li><a href="#">Produtos</a></li>
                     <li><a href="#">Manutenção</a></li>
                     <li><a href="#">Relatórios</a></li>
-                    <li><a href="#">Configuração</a></li>
+                    <li><a href="#" sec:authorize="hasRole('ROLE_USER')">Configuração</a></li>
                     <li><a href="/logout"><button>Sair</button></a>
                 </ul>
                 <h3 class="arearestrita">Área Restrita</h3>
