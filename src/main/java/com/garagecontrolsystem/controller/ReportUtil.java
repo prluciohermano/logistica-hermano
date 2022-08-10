@@ -19,7 +19,7 @@ public class ReportUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public byte[] gerarRelatório(@SuppressWarnings("rawtypes") List listDados, String relatorio,
+	public byte[] gerarRelatorio(@SuppressWarnings("rawtypes") List listDados, String relatorio,
 			ServletContext servletContext) throws Exception {
 		
 			/* Cria a lista de dados para o relatório com a nossa lista de objetos para imprimir */

@@ -7,13 +7,16 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.repository.PessoaRepository;
 
 @Service
+@Transactional
 public class PessoaService {
 	
 	final PessoaRepository pessoaRepository;
@@ -35,9 +38,8 @@ public class PessoaService {
 		return pessoaRepository.findById(id);
 	}
 	
-
-	public List<PessoaModel> findAll() {
-		return pessoaRepository.findAll();
+	public Page<PessoaModel> findAll() {
+		return pessoaRepository.findAll(PageRequest.of(0, 10, Sort.by("nome")));
 	}
 
 	@Transactional
@@ -55,6 +57,14 @@ public class PessoaService {
 
 	public List<PessoaModel> findPessoaBySexo(String pesqsexo) {
 		return pessoaRepository.findPessoaBySexo(pesqsexo);
+	}
+
+	public Page<PessoaModel> findPessoaByNamePage(String nameBusca, Pageable pageable) {
+		return pessoaRepository.findPessoaByNamePage(nameBusca, pageable);
+	}
+
+	public Page<PessoaModel> findPessoaBySexoPage(String nameBusca, String pesqsexo, Pageable pageable) {
+		return pessoaRepository.findPessoaBySexoPage(nameBusca, pesqsexo, pageable);
 	}
 
 }

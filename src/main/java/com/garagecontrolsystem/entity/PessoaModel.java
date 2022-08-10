@@ -1,6 +1,7 @@
 package com.garagecontrolsystem.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,10 +13,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -93,6 +99,18 @@ public class PessoaModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Cargo cargo;
 	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	private Date dataNasci;
+	
+	@Lob
+	private byte[] documento;
+	
+	
+	private String nomeFileDocumento;
+	
+	private String tipoFileDocumento;
+		
 	
 	public List<TelefoneModel> getTelefones() {
 		return telefones;
@@ -111,5 +129,4 @@ public class PessoaModel implements Serializable {
 		return tipospessoa;
 		
 	}
-	
 }

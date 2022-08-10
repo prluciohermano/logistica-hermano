@@ -12,6 +12,11 @@
 	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
 	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	
+	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 		
@@ -27,6 +32,15 @@ body {
 	align-items: center;
 }
 
+.caixa-page {
+	width: 100%;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	font-size: large;
+	font-weight: 400;
+}
+
 .caixa2 {
 	margin: 10px;
 	width: 100%;
@@ -34,7 +48,7 @@ body {
 	display: flex; 
 	justify-content: center;
 	align-items: top;
-		background-color: rgba(200, 200, 200, 1);
+	background-color: rgba(200, 200, 200, 1);
 }
 			
 .image-background {
@@ -93,6 +107,19 @@ body {
 	margin: 5px;
 }
 
+table {
+	width: 100%;
+}
+
+table td, table th {
+	border: 1px solid grey;
+}
+
+table th {
+	background: #eee;
+}
+
+
 </style>
 	
 </head>
@@ -141,7 +168,8 @@ body {
 		<div class="row">
 			<div class="input-field col s3">
 				<label for="nameBusca" class="active">Pesquisa por nome:</label>
-					<input name="nameBusca" id="nameBusca" class="validate">
+					<input name="nameBusca" id="nameBusca" class="validate"
+					th:value="${nameBusca}">
 					
 					</div>
 					
@@ -162,7 +190,7 @@ body {
 			
 					
 					<div class="input-field col s3">
-					<input  class="btn btn-warning" type="submit" value="Imprimir PDF"
+					<input  class="btn waves-effect waves-light #ffab00 amber accent-3" style="color: white;" type="submit" value="Imprimir PDF"
 							onclick="document.getElementById('pesquisarpessoa').method='get'" />
 					 </div>
 					</div>
@@ -174,13 +202,14 @@ body {
 		<div class="panel-heading">
 			<h5 class="panel-title">Lista de Pessoas</h5>
 		</div>
-		<div class="panel-body" style="height: 470px;overflow: scroll;"> 
+<!-- 		<div class="panel-body" style="height: 470px;overflow: scroll;">  -->
 			<table class="table table-striped" id="tabelaresultados">
 				<thead>
 					<tr>
 						<th>Nome</th>
 						<th>CPF</th>
 						<th>RG</th>
+						<th>Data Nasc.</th>
 						<th>Sexo</th>
 						<th>CEP</th>
 						<th>Rua</th>
@@ -191,18 +220,20 @@ body {
 						<th>UF</th>
 						<th>Tipo</th>
 						<th>Cargo</th>
+						<th>Documento</th>
 						<th>Editar</th>
 						<th>Excluir</th>
 					</tr>
 				</thead>
 			<tbody>
-		<tr th:each="pessoa : ${pessoas}">
+		<tr th:each="pessoa : ${pessoas.content}">
 		
 		<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.pessoaId})}">
 		 <span th:text="${pessoa.nome}"></span></a></td>
 		 
 		<td th:text="${pessoa.cpf}"></td>
 		<td th:text="${pessoa.rg}"></td>
+		<td th:text="${pessoa.dataNasci}"></td>
 		<td th:text="${pessoa.sexo}"></td>
 		<td th:text="${pessoa.cep}"></td>
 		<td th:text="${pessoa.rua}"></td>
@@ -211,15 +242,37 @@ body {
 		<td th:text="${pessoa.comp}"></td>
 		<td th:text="${pessoa.cidade}"></td>
 		<td th:text="${pessoa.uf}"></td>
-		<td th:text="${pessoa.nome}"></td>
+		<td th:text="${pessoa.tipospessoa}"></td>
 		<td th:text="${pessoa.cargo}"></td>
-		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Editar</a></td>
-		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}">Excluir</a></td>
+		<td>
+			<a th:if="${pessoa.documento != null}" th:href="@{/downloadDocs/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light green lighten-2" style="color: white;">Baixar</a>
+			<a th:if="${pessoa.documento == null}" class="btn waves-effect waves-light #bdbdbd grey lighten-2" style="color: black;">🚫</a>
+		</td>
+		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light blue lighten-2" style="color: white;">✍🏼</a></td>
+		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light red lighten-2" style="color: white;">X</a></td>
 			</tr>
 		</tbody>
 	</table>
-	</div>
-	</div>
+		<div class="row" style="margin-top: 30px;">
+			<center>
+				<span th:if="${pessoas.hasPrevious()}">
+					<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nameBusca=${nameBusca})}">Anterior< </a>
+				</span>
+				
+				<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}">
+				
+					<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nameBusca=${nameBusca})}">[[ ${i} + 1 ]]</a>
+				
+				</th:block>
+				
+				
+				<span th:if="${pessoas.hasNext()}">
+					<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nameBusca=${nameBusca})}"> >Próximo</a>
+				</span>
+			</div>
+		</div>
+	</center>
+<!-- 	</div> -->
 </fieldset>
 	<fieldset>
 			<div class="pesq-nav2" >
@@ -230,53 +283,69 @@ body {
 		</div>
 	
 		<div class="row">
-<form id="formpessoa" class="col s12" action="salvarpessoa" method="post" th:object="${pessoaobj}" style="margin: 20px 0">
+<form id="formpessoa" class="col s12" action="salvarpessoa" method="post" th:object="${pessoaobj}" style="margin: 20px 0"
+		 enctype="multipart/form-data">
 <!-- 	<div class="form-group"> th:object="${pessoaobj}" recebe o objeto para EDITAR -->
 	<div class="row">
 		<div class="input-fiel col s3">
 			<input type="hidden" class="form-control" placeholder="Id" name="pessoaId" th:field="*{pessoaId}" readonly="readonly"/>
+			<label for="nome" class="active">Nome:</label>
 			<input type="text" class="" placeholder="Nome" name="nome" th:field="*{nome}"/>
+			<label for="cpf" class="active">CPF:</label>
 			<input type="text" class="" placeholder="CPF" name="cpf" th:field="*{cpf}"/>
+			<label for="rg" class="active">R.G.:</label>
 			<input type="text" class="" placeholder="R.G." name="rg" th:field="*{rg}"/>
+			<label for="cep" class="active">CEP:</label>
 			<input type="text" class="" placeholder="CEP" name="cep" th:field="*{cep}"/>
+			<label for="rua" class="active">Rua:</label>
 			<input type="text" class="" placeholder="Rua" name="rua" th:field="*{rua}"/>
 		</div>
 		<div class="input-fiel col s3">
-			<input type="text" class="" placeholder="Número" name="numero" th:field="*{numero}"/>
-			<input type="text" class="" placeholder="Bairro" name="bairro" th:field="*{bairro}"/>
-			<input type="text" class="" placeholder="Complemento" name="comp" th:field="*{comp}"/>
-			<input type="text" class="" placeholder="Cidade" name="cidade" th:field="*{cidade}"/>
-			<input type="text" class="" placeholder="Estado" name="uf" th:field="*{uf}"/>
+			<label for="numero" class="active">Número:</label>
+			<input type="text" class="" placeholder="Digite o Número" name="numero" th:field="*{numero}"/>
+			<label for="bairro" class="active">Bairro:</label>
+			<input type="text" class="" placeholder="Digite o Bairro" name="bairro" th:field="*{bairro}"/>
+			<label for="comp" class="active">Complemento:</label>
+			<input type="text" class="" placeholder="Digite o Complemento" name="comp" th:field="*{comp}"/>
+			<label for="cidade" class="active">Cidade:</label>
+			<input type="text" class="" placeholder="Digite a Cidade" name="cidade" th:field="*{cidade}"/>
+			<label for="uf" class="active">Estado:</label>
+			<input type="text" class="" placeholder="Digite o Estado" name="uf" th:field="*{uf}"/>
 		</div>
 		<div class="input-fiel col s3">
-			<label for="tipospessoa" class="active" >Tipo</label>
+		
+			<label for="dataNasci" class="active" >Data Nasc.:</label>
+			<input type="date" th:field="*{dataNasci}" id="dataNasci"
+				   name="dataNasci" placeholder="Data Nasc.">
+				
+				<label for="tipospessoa" class="active" >Tipo</label>
 			<select class="browser-default" th:field="*{tipospessoa}" id="tipospessoa">
-			<option value="" selected>Tipo</option>
+				<option value="" selected>Tipo</option>
 				<option th:each = "p : ${tipos}" th:value="${p.id}" th:text="${p.nome}">
 			</select>
 						
-			<label for="cargo" class="active" >Cargo</label>
+				<label for="cargo" class="active" >Cargo</label>
 			<select class="browser-default" th:field="*{cargo}" id="cargo">
-			<option value="" selected>Cargo</option>
+				<option value="" selected>Cargo</option>
 				<option th:each = "c : ${T(com.garagecontrolsystem.entity.Cargo).values()}"
 					 			th:value="${c}" th:text="${c.nome}">
 			</select>
 			
-			<label for="sexo" class="active" >Sexo</label>
+				<label for="sexo" class="active" >Sexo</label>
 			<select class="browser-default" th:field="*{sexo}">
 				<option value="" selected>Sexo</option>
 				<option value="MASCULINO" th:text="Masculino"/>
 				<option value="FEMININO" th:text="Feminino"/>
 			</select>
-			
-		</div>
-		<div class="input-fiel col s3">
-			
-			<br><br><br><br><br><br><br><br><br><br>
-			<button type="submit" class="waves-effect waves-light btn">Salvar</button>
-			<button class="waves-effect waves-light btn" onclick="document.getElementById('formpessoa').reset();">Novo</button>
-		
+			<div class="input-fiel col s3">
+				<label for="file" class="file-field input-field" >Documentos</label>
+				<input type="file" id="file" name="file">
 			</div>
+			<br><br><br><br><br>
+			<button type="submit" class="waves-effect waves-light btn">Salvar</button>
+			<button class="btn waves-effect waves-light blue lighten-2" onclick="document.getElementById('formpessoa').reset();" >Novo</button>
+		
+		</div>
 		
 	</div>
 	
@@ -288,6 +357,11 @@ body {
     <script type="text/javascript" >
 
         $(document).ready(function() {
+        	
+        	$('#dataNasc').datepicker({
+        		showOthermonths:true,
+        		format: 'yyyy-MM-dd'
+        	});
 
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
