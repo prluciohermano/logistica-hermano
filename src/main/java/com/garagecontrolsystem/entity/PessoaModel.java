@@ -1,6 +1,7 @@
 package com.garagecontrolsystem.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,60 +34,53 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "TB_PESSOA")
 public class PessoaModel implements Serializable {
-	public TipoPessoaModel getTipospessoa() {
-		return tipospessoa;
-	}
-
-	public void setTipospessoa(TipoPessoaModel tipospessoa) {
-		this.tipospessoa = tipospessoa;
-	}
-
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID pessoaId;
 	
-	@NotBlank(message = "Campo Nome não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Nome não pode ser vazio ou nulo!")
 	@Column(name = "nome", length = 100)
 	private String nome;
 	
-	@NotBlank(message = "Campo CPF não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo CPF não pode ser vazio ou nulo!")
 	@Column(name = "cpf", length = 11)
 	private String cpf;
 	
-	@NotBlank(message = "Campo Registro Geral não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Registro Geral não pode ser vazio ou nulo!")
 	@Column(name = "rg", length = 100)
 	private String rg;
 	
-	@NotBlank(message = "Campo Sexo não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Sexo não pode ser vazio ou nulo!")
 	@Column(name = "sexo", length = 100)
 	private String sexo;
 	
-	@NotBlank(message = "Campo CEP não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo CEP não pode ser vazio ou nulo!")
 	@Column(name = "cep", length = 100)
 	private String cep;
 	
-	@NotBlank(message = "Campo Rua não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Rua não pode ser vazio ou nulo!")
 	@Column(name = "rua", length = 100)
 	private String rua;
 	
-	@NotBlank(message = "Campo Número não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Número não pode ser vazio ou nulo!")
 	@Column(name = "numero", length = 100)
 	private String numero;
 	
-	@NotBlank(message = "Campo Bairro não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Bairro não pode ser vazio ou nulo!")
 	@Column(name = "bairro", length = 100)
 	private String bairro;
 	
 	@Column(name = "comp", length = 100)
 	private String comp;
 	
-	@NotBlank(message = "Campo Cidade não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Cidade não pode ser vazio ou nulo!")
 	@Column(name = "cidade", length = 100)
 	private String cidade;
 	
-	@NotBlank(message = "Campo Estado não pode ser vazio ou nulo!")
+	//@NotBlank(message = "Campo Estado não pode ser vazio ou nulo!")
 	@Column(name = "uf", length = 100)
 	private String uf;
 		
@@ -110,6 +104,17 @@ public class PessoaModel implements Serializable {
 	private String nomeFileDocumento;
 	
 	private String tipoFileDocumento;
+	
+	
+	@OneToMany(mappedBy = "pessoaModel")
+	private List<ProdutoModel> produtosModel;
+	
+	public List<ProdutoModel> getProdutosModel() {
+		if(this.produtosModel == null) {
+			this.produtosModel = new ArrayList<>();
+		}
+		return produtosModel;
+	}
 		
 	
 	public List<TelefoneModel> getTelefones() {
@@ -128,5 +133,19 @@ public class PessoaModel implements Serializable {
 	public TipoPessoaModel getTipoPessoaModel() {
 		return tipospessoa;
 		
+	}
+	
+	public TipoPessoaModel getTipospessoa() {
+		return tipospessoa;
+	}
+
+	public void setTipospessoa(TipoPessoaModel tipospessoa) {
+		this.tipospessoa = tipospessoa;
+	}
+
+
+	public PessoaModel(String nome2, String cpf2, String cep2, String rua2, String numero2, String bairro2,
+			String comp2, String cidade2, String uf2) {
+		// TODO Auto-generated constructor stub
 	}
 }

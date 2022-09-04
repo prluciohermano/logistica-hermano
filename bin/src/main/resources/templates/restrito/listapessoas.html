@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lista de Pessoas</title>
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
+	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	
+	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+		
+body {  
+	background-color: rgba(253, 253, 253, .5);  
+}  
+	
+.caixa {
+	width: 100%;
+	height: 100vh;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+}
+
+.caixa-page {
+	width: 100%;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	font-size: large;
+	font-weight: 400;
+}
+
+.caixa2 {
+	margin: 10px;
+	width: 100%;
+	height: 100vh;
+	display: flex; 
+	justify-content: center;
+	align-items: top;
+	background-color: rgba(200, 200, 200, 1);
+}
+			
+.image-background {
+	position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.card {
+    background: #ffffffad;
+    padding: 30px;
+    border-radius: 10px;
+    border-color: black;
+}
+			
+.centered2 {
+	display: block;
+	margin: 0px auto;
+	padding: 0px;
+}	
+
+.rounded-circle {
+	width: 100px;
+	height: 80px;
+
+}
+
+.home-bar {
+	width: 50px;
+	height: 50px;
+
+}
+
+.pesq-nav {
+	width: 100%;
+	height: 80px;
+	background-color: rgba(100, 220, 140, 0.5); 
+	padding:  10px;
+	margin: 0px;
+	margin-top: 0px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.pesq-nav2 {
+	background-color: rgba(100, 220, 140, 0.5); 
+	padding:  5px;
+	margin: 8px 0px;
+	text-align: left;
+}
+
+.pesq-nav2 h5 {
+	margin: 5px;
+}
+
+table {
+	width: 100%;
+}
+
+table td, table th {
+	border: 1px solid grey;
+}
+
+table th {
+	background: #eee;
+}
+
+
+</style>
+	
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+    <a class="navbar-brand" href="/">Garage Control</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="arearestrita">Home</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link active" href="listapessoas">Pessoas</a>
+        </li>
+          <li class="nav-item">
+         
+            <li class="nav-item">
+          <a class="nav-link active" href="listapessoas">Produtos</a>
+        	</li>
+  
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Relatórios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index">Manutenção</a>
+        </li>
+       </ul> 
+       <ul class="nav justify-content-end">   
+         <li class="nav-item" >
+          <a class="nav-link active" href="/logout">Sair do Sistema</a>
+        </li>
+         </ul>
+    </div>
+  </div>
+</nav>
+<body>
+<fieldset>
+
+	<div class="pesq-nav" >
+	<br /><br />
+	<form action="pesquisarpessoa" method="post" class="col s12" id="pesquisarpessoa">
+		<div class="row">
+			<div class="input-field col s3">
+				<label for="nameBusca" class="active">Pesquisa por nome:</label>
+					<input name="nameBusca" id="nameBusca" class="validate"
+					th:value="${nameBusca}">
+					
+					</div>
+					
+					<div class="input-field col s3">
+					<label for="pesqsexo" class="active">Pesquisa Sexo</label>
+				    	<select	class="browser-default" name="pesqsexo" id="pesqsexo">
+							<option value="">--[ Todos ]--</option>
+							<option value="MASCULINO">Masculino</option>
+							<option value="FEMININO">Feminino</option>
+						</select>
+				</div>
+					<div class="input-field col s4">
+						<input class="btn btn-success" type="submit"  value="Buscar"
+								 onclick="document.getElementById('buscarPorNome').method='get'"> 
+<!-- 					<input class="btn btn-success" type="submit" value="Buscar" -->
+<!-- 						 onclick="pesquisarPessoa()">  -->
+					</div>
+			
+					
+					<div class="input-field col s3">
+					<input  class="btn waves-effect waves-light #ffab00 amber accent-3" style="color: white;" type="submit" value="Imprimir PDF"
+							onclick="document.getElementById('pesquisarpessoa').method='get'" />
+					 </div>
+					</div>
+				</form>
+			</div>
+</fieldset>
+	<fieldset>
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h5 class="panel-title">Lista de Pessoas</h5>
+		</div>
+<!-- 		<div class="panel-body" style="height: 470px;overflow: scroll;">  -->
+			<table class="table table-striped" id="tabelaresultados">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>CPF</th>
+						<th>RG</th>
+						<th>Data Nasc.</th>
+						<th>Sexo</th>
+						<th>CEP</th>
+						<th>Rua</th>
+						<th>Número</th>
+						<th>Bairro</th>
+						<th>Complemento</th>
+						<th>Cidade</th>
+						<th>UF</th>
+						<th>Tipo</th>
+						<th>Cargo</th>
+						<th>Documento</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+			<tbody>
+		<tr th:each="pessoa : ${pessoas.content}">
+		
+		<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.pessoaId})}">
+		 <span th:text="${pessoa.nome}"></span></a></td>
+		 
+		<td th:text="${pessoa.cpf}"></td>
+		<td th:text="${pessoa.rg}"></td>
+		<td th:text="${pessoa.dataNasci}"></td>
+		<td th:text="${pessoa.sexo}"></td>
+		<td th:text="${pessoa.cep}"></td>
+		<td th:text="${pessoa.rua}"></td>
+		<td th:text="${pessoa.numero}"></td>
+		<td th:text="${pessoa.bairro}"></td>
+		<td th:text="${pessoa.comp}"></td>
+		<td th:text="${pessoa.cidade}"></td>
+		<td th:text="${pessoa.uf}"></td>
+		<td th:text="${pessoa.tipospessoa}"></td>
+		<td th:text="${pessoa.cargo}"></td>
+		<td>
+			<a th:if="${pessoa.documento != null}" th:href="@{/downloadDocs/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light green lighten-2" style="color: white;">Baixar</a>
+			<a th:if="${pessoa.documento == null}" class="btn waves-effect waves-light #bdbdbd grey lighten-2" style="color: black;">🚫</a>
+		</td>
+		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light blue lighten-2" style="color: white;">✍🏼</a></td>
+		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.pessoaId})}" class="btn waves-effect waves-light red lighten-2" style="color: white;">X</a></td>
+			</tr>
+		</tbody>
+	</table>
+		<div class="row" style="margin-top: 30px;">
+			<center>
+				<span th:if="${pessoas.hasPrevious()}">
+					<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nameBusca=${nameBusca})}">Anterior< </a>
+				</span>
+				
+				<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}">
+				
+					<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nameBusca=${nameBusca})}">[[ ${i} + 1 ]]</a>
+				
+				</th:block>
+				
+				
+				<span th:if="${pessoas.hasNext()}">
+					<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nameBusca=${nameBusca})}"> >Próximo</a>
+				</span>
+			</div>
+		</div>
+	</center>
+<!-- 	</div> -->
+</fieldset>
+	<fieldset>
+			<div class="pesq-nav2" >
+			<h5 class="panel-title">Cadastrar Pessoa</h5></div>
+	
+		<div th:each = "m : ${msg}"  style="color: red;"> <!-- * Mensagem de erros vinda de Annotations do Model */ -->
+			<span th:text = "${m}"></span>
+		</div>
+	
+		<div class="row">
+<form id="formpessoa" class="col s12" action="salvarpessoa" method="post" th:object="${pessoaobj}" style="margin: 20px 0"
+		 enctype="multipart/form-data">
+<!-- 	<div class="form-group"> th:object="${pessoaobj}" recebe o objeto para EDITAR -->
+	<div class="row">
+		<div class="input-fiel col s3">
+			<input type="hidden" class="form-control" placeholder="Id" name="pessoaId" th:field="*{pessoaId}" readonly="readonly"/>
+			<label for="nome" class="active">Nome:</label>
+			<input type="text" class="" placeholder="Nome" name="nome" th:field="*{nome}"/>
+			<label for="cpf" class="active">CPF:</label>
+			<input type="text" class="" placeholder="CPF" name="cpf" th:field="*{cpf}"/>
+			<label for="rg" class="active">R.G.:</label>
+			<input type="text" class="" placeholder="R.G." name="rg" th:field="*{rg}"/>
+			<label for="cep" class="active">CEP:</label>
+			<input type="text" class="" placeholder="CEP" name="cep" th:field="*{cep}"/>
+			<label for="rua" class="active">Rua:</label>
+			<input type="text" class="" placeholder="Rua" name="rua" th:field="*{rua}"/>
+		</div>
+		<div class="input-fiel col s3">
+			<label for="numero" class="active">Número:</label>
+			<input type="text" class="" placeholder="Digite o Número" name="numero" th:field="*{numero}"/>
+			<label for="bairro" class="active">Bairro:</label>
+			<input type="text" class="" placeholder="Digite o Bairro" name="bairro" th:field="*{bairro}"/>
+			<label for="comp" class="active">Complemento:</label>
+			<input type="text" class="" placeholder="Digite o Complemento" name="comp" th:field="*{comp}"/>
+			<label for="cidade" class="active">Cidade:</label>
+			<input type="text" class="" placeholder="Digite a Cidade" name="cidade" th:field="*{cidade}"/>
+			<label for="uf" class="active">Estado:</label>
+			<input type="text" class="" placeholder="Digite o Estado" name="uf" th:field="*{uf}"/>
+		</div>
+		<div class="input-fiel col s3">
+		
+			<label for="dataNasci" class="active" >Data Nasc.:</label>
+			<input type="date" th:field="*{dataNasci}" id="dataNasci"
+				   name="dataNasci" placeholder="Data Nasc.">
+				
+				<label for="tipospessoa" class="active" >Tipo</label>
+			<select class="browser-default" th:field="*{tipospessoa}" id="tipospessoa">
+				<option value="" selected>Tipo</option>
+				<option th:each = "p : ${tipos}" th:value="${p.id}" th:text="${p.nome}">
+			</select>
+						
+				<label for="cargo" class="active" >Cargo</label>
+			<select class="browser-default" th:field="*{cargo}" id="cargo">
+				<option value="" selected>Cargo</option>
+				<option th:each = "c : ${T(com.garagecontrolsystem.entity.Cargo).values()}"
+					 			th:value="${c}" th:text="${c.nome}">
+			</select>
+			
+				<label for="sexo" class="active" >Sexo</label>
+			<select class="browser-default" th:field="*{sexo}">
+				<option value="" selected>Sexo</option>
+				<option value="MASCULINO" th:text="Masculino"/>
+				<option value="FEMININO" th:text="Feminino"/>
+			</select>
+			<div class="input-fiel col s3">
+				<label for="file" class="file-field input-field" >Documentos</label>
+				<input type="file" id="file" name="file">
+			</div>
+			<br><br><br><br><br>
+			<button type="submit" class="waves-effect waves-light btn">Salvar</button>
+			<button class="btn waves-effect waves-light blue lighten-2" onclick="document.getElementById('formpessoa').reset();" >Novo</button>
+		
+		</div>
+		
+	</div>
+	
+	</form>
+			</div>
+				
+				</fieldset>
+<!-- Adicionando Javascript -->
+    <script type="text/javascript" >
+
+        $(document).ready(function() {
+        	
+        	$('#dataNasc').datepicker({
+        		showOthermonths:true,
+        		format: 'yyyy-MM-dd'
+        	});
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
+
+<!-- <script type="text/javascript"> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

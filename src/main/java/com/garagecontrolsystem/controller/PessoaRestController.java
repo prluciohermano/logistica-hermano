@@ -26,7 +26,7 @@ import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.service.PessoaService;
 
 @RestController
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RequestMapping("/api/pessoas")
 public class PessoaRestController {
 	
@@ -37,21 +37,21 @@ public class PessoaRestController {
 	}
 	
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid PessoaModel pessoa){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.save(pessoa));
 	}
 	
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping
 	public ResponseEntity<Page<PessoaModel>> findAllPessoa(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageable){	
 		return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findAll(pageable));
 	}
 
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> findByIdPessoa(@PathVariable(value = "id") UUID id){
 		Optional<PessoaModel> pessoaOptional = pessoaService.findById(id);
