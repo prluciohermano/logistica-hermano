@@ -14,6 +14,7 @@ import com.garagecontrolsystem.repository.CategoriaRepository;
 import com.garagecontrolsystem.service.exceptions.ObjectNotFoundException;
 
 @Service
+@Transactional
 public class CategoriaService {
 	
 	@Autowired
@@ -29,7 +30,6 @@ public class CategoriaService {
 		return categoriaRepository.findAll();
 	}
 	
-	@Transactional
 	public CategoriaModel create(CategoriaModel obj) {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
@@ -40,5 +40,10 @@ public class CategoriaService {
 		obj.setNome(objDTO.getNome());
 		obj.setDescricao(objDTO.getDescricao());
 		return categoriaRepository.save(obj);
+	}
+
+	public void delete(Long id) {
+		findById(id);
+		categoriaRepository.deleteById(id);
 	}
 }
