@@ -1,15 +1,15 @@
 package com.garagecontrolsystem.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
-
 import com.garagecontrolsystem.entity.PessoaModel;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PessoaDTO {
     private String nome;
     private String cpf;
@@ -21,23 +21,24 @@ public class PessoaDTO {
     private String cidade;
     private String uf;
 
-    public PessoaModel toModel(){
-        return new PessoaModel(nome, cpf, cep, rua, numero, bairro, comp, cidade, uf);
-    }
+//    public PessoaModel toModel(){
+//        return new PessoaModel(nome, cpf, cep, rua, numero, bairro, comp, cidade, uf);
+//    }
 
-    private PessoaDTO convert(PessoaModel pessoa) {
-        BeanUtils.copyProperties(pessoa, this, nome, cpf, cep, rua, numero, bairro, comp, cidade, uf);
-        return this;
-    }
+    
 
-    public List<PessoaDTO> convertList(List<PessoaModel> pessoaList){
-       PessoaDTO pessoaDTO = new PessoaDTO();
-       List<PessoaDTO> pessoaDTOList = new ArrayList<>();
-       pessoaList.forEach(u -> {
-           pessoaDTOList.add(pessoaDTO.convert(u));
-       });
-       return pessoaDTOList;
-    }
+	public PessoaDTO(PessoaModel obj) {
+		this.nome = obj.getNome();
+		this.cpf = obj.getCpf();
+		this.cep = obj.getCep();
+		this.rua = obj.getRua();
+		this.numero = obj.getNumero();
+		this.bairro = obj.getBairro();
+		this.comp = obj.getComp();
+		this.cidade = obj.getCidade();
+		this.uf = obj.getUf();
+		
+	}
 
 
 

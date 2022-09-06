@@ -32,28 +32,4 @@ public class ProdutoDTO {
 		this.precoEntrada = promod.getPrecoEntrada();
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	private ProdutoDTO convert(ProdutoModel produto) {
-//        BeanUtils.copyProperties(produto, this);
-//        return this;
-//    }
-
-//    public List<ProdutoDTO> convertList(List<ProdutoModel> produtoList){
-//    	ProdutoDTO produtoDTO = new ProdutoDTO(descProduto, anoModelo, corProduto, dataEntrada, precoEntrada);
-//       List<ProdutoDTO> produtoDTOList = new ArrayList<>();
-//       produtoList.forEach(p -> {
-//           produtoDTOList.add(produtoDTO.convert(p));
-//       });
-//       return produtoDTOList;
-//    }
-	
-
 }

@@ -26,7 +26,7 @@ import com.garagecontrolsystem.service.ProdutoService;
 
 @RestController
 @RequestMapping("/api/produtos")
-public class ProdutoController {
+public class ProdutoRestController {
 
 	@Autowired
 	private ProdutoService produtoService;

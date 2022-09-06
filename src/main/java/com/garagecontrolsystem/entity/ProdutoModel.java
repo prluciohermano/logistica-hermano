@@ -58,6 +58,10 @@ public class ProdutoModel implements Serializable {
 	private BigDecimal precoEntrada;
 	
 	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private CategoriaModel categoria;
+	
+	@ManyToOne
     @JoinColumn(name = "pessoa_id")
     private PessoaModel pessoaModel;
 	

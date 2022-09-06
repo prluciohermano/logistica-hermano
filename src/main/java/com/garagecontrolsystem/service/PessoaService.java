@@ -41,6 +41,10 @@ public class PessoaService {
 	public Page<PessoaModel> findAll() {
 		return pessoaRepository.findAll(PageRequest.of(0, 10, Sort.by("nome")));
 	}
+	
+	public List<PessoaModel> findAllPessoa() {
+		return pessoaRepository.findAll();
+	}
 
 	@Transactional
 	public void deleteById(UUID pessoaId) {
