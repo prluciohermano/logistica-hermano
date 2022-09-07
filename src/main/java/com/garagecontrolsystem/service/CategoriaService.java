@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.dto.CategoriaDTO;
@@ -44,6 +45,12 @@ public class CategoriaService {
 
 	public void delete(Long id) {
 		findById(id);
-		categoriaRepository.deleteById(id);
+		try {
+			categoriaRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new com.garagecontrolsystem.service.exceptions.DataIntegrityViolationException(
+					"Categoria não pode ser deletada! Possui arquivos associados.");
+		}
+		
 	}
 }

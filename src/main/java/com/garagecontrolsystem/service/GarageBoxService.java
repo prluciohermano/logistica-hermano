@@ -1,5 +1,6 @@
 package com.garagecontrolsystem.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +48,10 @@ public class GarageBoxService {
 	public void delete(GarageBoxModel garageBoxModel) {
 		garageBoxRepository.delete(garageBoxModel);
 		
+	}
+
+	public List<GarageBoxModel> findAll() {
+		return garageBoxRepository.findAll();
 	}
 	
 	

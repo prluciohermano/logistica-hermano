@@ -2,8 +2,10 @@ package com.garagecontrolsystem.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.garagecontrolsystem.dto.CategoriaDTO;
 import com.garagecontrolsystem.dto.GarageBoxDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
 import com.garagecontrolsystem.service.GarageBoxService;
@@ -31,7 +34,6 @@ import com.garagecontrolsystem.service.GarageBoxService;
 import lombok.var;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/garage-box")
 public class GarageBoxController {
 
@@ -57,9 +59,11 @@ public class GarageBoxController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(garageBoxService.save(garageBoxModel));}
 	
 	
-	@GetMapping /******************************* Buscar todas as vagas - paginadas */
-	public ResponseEntity<Page<GarageBoxModel>> findAllGarageBoxModel(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable ){
-		return ResponseEntity.status(HttpStatus.OK).body(garageBoxService.findAll(pageable));
+	@GetMapping /******************************* Buscar todas as vagas */
+	public ResponseEntity<List<GarageBoxDTO>> findAll(){
+		List<GarageBoxModel> list = garageBoxService.findAll();
+		List<GarageBoxDTO> listDTO = list.stream().map(obj -> new GarageBoxDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(listDTO);
 	}
 	
 	
