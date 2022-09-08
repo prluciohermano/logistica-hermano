@@ -32,6 +32,14 @@ public class ProdutoService {
 		return produtoRepository.save(produto);
 	}
 	
+	@Transactional
+	public ProdutoModel create(Long id_cat, ProdutoModel obj) {
+		obj.setId(null);
+		CategoriaModel cat = categoriaService.findById(id_cat);
+		obj.setCategoria(cat);
+		return produtoRepository.save(obj);
+	}
+	
 	public ProdutoModel findById(Long id){
 		Optional<ProdutoModel> obj = produtoRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -57,14 +65,19 @@ public class ProdutoService {
 		
 	}
 	
-	public ProdutoModel update(Long id, ProdutoDTO objDTO) {
-		ProdutoModel obj = findById(id);
-		obj.setDescProduto(objDTO.getDescProduto());
-		obj.setAnoModelo(objDTO.getAnoModelo());
-		obj.setCorProduto(objDTO.getCorProduto());
-		obj.setDataEntrada(objDTO.getDataEntrada());
-		obj.setPrecoEntrada(objDTO.getPrecoEntrada());
-		return produtoRepository.save(obj);
+	public ProdutoModel update(Long id, ProdutoModel obj) {
+		ProdutoModel newObj = findById(id);
+		updateData(newObj, obj);
+		return produtoRepository.save(newObj);
+	}
+
+	private void updateData(ProdutoModel newObj, ProdutoModel obj) {
+		newObj.setDescProduto(obj.getDescProduto());
+		newObj.setAnoModelo(obj.getAnoModelo());
+		newObj.setCorProduto(obj.getCorProduto());
+		newObj.setDataEntrada(obj.getDataEntrada());
+		newObj.setPrecoEntrada(obj.getPrecoEntrada());
+		
 	}
 
 	public void delete(Long id) {

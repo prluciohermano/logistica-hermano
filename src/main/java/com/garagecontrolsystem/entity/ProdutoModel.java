@@ -20,6 +20,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -57,6 +59,7 @@ public class ProdutoModel implements Serializable {
 	@NotNull(message = "{campo.precoEntrada.obrigatorio}")
 	private BigDecimal precoEntrada;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
 	private CategoriaModel categoria;
