@@ -54,7 +54,7 @@ public class GarageBoxController {
 		if(garageBoxService.existsByNumeroBox(garageBoxDTO.getNumeroBox())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: Esse Box já está ocupado");}
 		
-		var garageBoxModel = new GarageBoxModel();
+		GarageBoxModel garageBoxModel = new GarageBoxModel();
 		BeanUtils.copyProperties(garageBoxDTO, garageBoxModel);
 		garageBoxModel.setEntradaCar(LocalDateTime.now(ZoneId.of("UTC")));
 		return ResponseEntity.status(HttpStatus.CREATED).body(garageBoxService.save(garageBoxModel));}
@@ -95,7 +95,7 @@ public class GarageBoxController {
 		if (!garageBoxModelOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Registro não encontrado pelo Id informado!");
 		}
-		var garageBoxModel = new GarageBoxModel();
+		GarageBoxModel garageBoxModel = new GarageBoxModel();
 		BeanUtils.copyProperties(garageBoxDTO, garageBoxModel);
 		garageBoxModel.setId(garageBoxModelOptional.get().getId());
 		garageBoxModel.setEntradaCar(garageBoxModelOptional.get().getEntradaCar());
