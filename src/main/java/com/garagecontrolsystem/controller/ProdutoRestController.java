@@ -7,12 +7,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,12 +23,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.garagecontrolsystem.dto.CategoriaDTO;
 import com.garagecontrolsystem.dto.ProdutoDTO;
-import com.garagecontrolsystem.entity.CategoriaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
 import com.garagecontrolsystem.service.ProdutoService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoRestController {
@@ -47,7 +43,7 @@ public class ProdutoRestController {
 
 	@PostMapping /* ***************************************************** Salvar Produto */
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ProdutoModel> create(@RequestParam(value = "categoria", defaultValue = "0") Long id_cat,
+	public ResponseEntity<ProdutoModel> create(@Valid @RequestParam(value = "categoria", defaultValue = "0") Long id_cat,
 							   @RequestBody ProdutoModel obj) {
 		ProdutoModel newObj = produtoService.create(id_cat, obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/produtos/{id}").buildAndExpand(newObj.getId()).toUri();
@@ -72,7 +68,7 @@ public class ProdutoRestController {
 	}
 	
 	@PutMapping("/{id}") /* ******************************************** Atualizar Produto por ID */
-	public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, @RequestBody ProdutoModel obj){
+	public ResponseEntity<ProdutoDTO> update(@Valid @PathVariable Long id, @RequestBody ProdutoModel obj){
 		ProdutoModel newObj = produtoService.update(id, obj);
 		return ResponseEntity.ok().body(new ProdutoDTO(newObj));
 		
@@ -86,8 +82,7 @@ public class ProdutoRestController {
 	}
 	
 	@DeleteMapping("/{id}") /* ******************************************** Deletar Produto por ID */
-	public ResponseEntity<Void> delete(@PathVariable Long id){
-		produtoService.delete(id);
+	public ResponseEntity<Void> delete(@PathVariable Long id){produtoService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 

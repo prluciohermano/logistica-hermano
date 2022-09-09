@@ -33,6 +33,7 @@ import com.garagecontrolsystem.service.GarageBoxService;
 
 import lombok.var;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/garage-box")
 public class GarageBoxController {

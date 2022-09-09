@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.garagecontrolsystem.dto.CategoriaDTO;
 import com.garagecontrolsystem.entity.CategoriaModel;
 import com.garagecontrolsystem.service.CategoriaService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/categorias")
 public class CategoriaRestController {
@@ -43,14 +45,14 @@ public class CategoriaRestController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CategoriaModel> create(@RequestBody @Valid CategoriaModel obj){
+	public ResponseEntity<CategoriaModel> create(@Valid @RequestBody CategoriaModel obj){
 		obj = categoriaService.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO objDTO){
+	public ResponseEntity<CategoriaDTO> update(@Valid @PathVariable Long id, @RequestBody CategoriaDTO objDTO){
 		CategoriaModel newObj = categoriaService.update(id, objDTO);
 		return ResponseEntity.ok().body(new CategoriaDTO(newObj));
 		

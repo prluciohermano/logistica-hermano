@@ -17,20 +17,20 @@ import com.garagecontrolsystem.service.exceptions.ObjectNotFoundException;
 @Service
 @Transactional
 public class CategoriaService {
-	
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
+
 	public CategoriaModel findById(Long id) {
 		Optional<CategoriaModel> obj = categoriaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Categoria não encontrada! Id: " + id + ", Tipo: " + CategoriaModel.class.getName()));
 	}
-	
-	public List<CategoriaModel> findAll(){
+
+	public List<CategoriaModel> findAll() {
 		return categoriaRepository.findAll();
 	}
-	
+
 	public CategoriaModel create(CategoriaModel obj) {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
@@ -51,6 +51,6 @@ public class CategoriaService {
 			throw new com.garagecontrolsystem.service.exceptions.DataIntegrityViolationException(
 					"Categoria não pode ser deletada! Possui arquivos associados.");
 		}
-		
+
 	}
 }

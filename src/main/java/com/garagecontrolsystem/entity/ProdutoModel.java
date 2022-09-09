@@ -40,15 +40,15 @@ public class ProdutoModel implements Serializable {
 	private Long id;
 
 	@Column(length = 100)
-	@NotEmpty(message = "{campo.descricao.obrigatorio}")
+	@NotEmpty(message = "O campo descrição do Produto é obrigatorio")
 	private String descProduto;
 	
 	@Column(length = 20)
-	@NotEmpty(message = "{campo.anoModelo.obrigatorio}")
+	@NotEmpty(message = "O campo ano modelo do Produto é obrigatorio")
 	private String anoModelo;
 	
 	@Column(length = 20)
-	@NotEmpty(message = "{campo.anoModelo.obrigatorio}")
+	@NotEmpty(message = "O campo cor do Produto é obrigatorio")
 	private String corProduto;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -56,7 +56,7 @@ public class ProdutoModel implements Serializable {
 	private Date dataEntrada;
 
 	@Column(name = "preco_entrada")
-	@NotNull(message = "{campo.precoEntrada.obrigatorio}")
+	@NotNull(message = "O campo preço de entrada do Produto é obrigatorio")
 	private BigDecimal precoEntrada;
 	
 	@JsonIgnore
