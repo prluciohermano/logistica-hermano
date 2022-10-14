@@ -2,7 +2,9 @@ package com.garagecontrolsystem.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,43 +38,43 @@ public class ProdutoModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 100)
-	@NotEmpty(message = "O campo descrição do Produto é obrigatorio")
-	private String descProduto;
+	@Column(name = "descProduto", length = 100)
+	//@NotEmpty(message = "O campo descrição do Produto é obrigatorio")
+	private String descricao;
 	
 	@Column(length = 20)
-	@NotEmpty(message = "O campo ano modelo do Produto é obrigatorio")
+	//@NotEmpty(message = "O campo placa é obrigatorio")
+	private String placaCar;
+	
+	@Column(length = 20)
+	//@NotEmpty(message = "O campo ano modelo do Produto é obrigatorio")
 	private String anoModelo;
 	
 	@Column(length = 20)
-	@NotEmpty(message = "O campo cor do Produto é obrigatorio")
+	//@NotEmpty(message = "O campo cor do Produto é obrigatorio")
 	private String corProduto;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date dataEntrada;
+	//@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dataEntrada;
 
 	@Column(name = "preco_entrada")
-	@NotNull(message = "O campo preço de entrada do Produto é obrigatorio")
+	//@NotNull(message = "O campo preço de entrada do Produto é obrigatorio")
 	private BigDecimal precoEntrada;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
 	private CategoriaModel categoria;
 	
+//	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "pessoa_id")
     private PessoaModel pessoaModel;
 	
-	@Lob
-	private byte[] documento;
+	 
+	@OneToMany(mappedBy = "produtoModel")
+	@JsonIgnore
+	private Set<GarageBoxModel> garageBox = new HashSet<>();
 	
-	
-	private String nomeFileDocumento;
-	
-	
-	private String tipoFileDocumento;
-
-
 }

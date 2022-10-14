@@ -13,6 +13,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,16 @@ public class CategoriaModel {
 	@Length(min = 5, max = 150, message = "O campo Descrição dever ter pelo menos 5 caracteres. Máximo 150!")
 	private String descricao;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "categoria")
 	private List<ProdutoModel> produtos = new ArrayList<>();
+	
+	
+	public List<ProdutoModel> getProdutos() {
+		return produtos;
+	}
 
+	public void setProdutos(List<ProdutoModel> produtos) {
+		this.produtos = produtos;
+	}
 }

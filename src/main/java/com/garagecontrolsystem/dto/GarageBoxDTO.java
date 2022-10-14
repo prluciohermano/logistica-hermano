@@ -1,9 +1,14 @@
 package com.garagecontrolsystem.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
+import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.ProdutoModel;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,40 +17,51 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GarageBoxDTO {
 	
-	@NotBlank
+	//@NotBlank
+	private Long id;
+	
+	//@NotBlank
 	private String numeroBox;
-
-	@NotBlank
-	@Size(max = 7)
-	private String placaCar;
 	
-	@NotBlank
-	private String marcaCar;
+	//@NotBlank
+	private PessoaModel pessoaModel;
 	
-	@NotBlank
-	private String modeloCar;
+	//@NotBlank
+	private ProdutoModel produtoModel;
 	
-	@NotBlank
-	private String corCar;
-	
-	@NotBlank
-	private String nomeResp;
-	
-	@NotBlank
+	//@NotBlank
 	private String defeitoCar;
 	
-	@NotBlank
+	//@NotBlank
+//	private String corProduto;
+	
+	//@NotBlank
+	private LocalDateTime entradaCar;
+	
+	//@NotBlank
 	private String mecanicoCar;
 	
+
+//	private String descricao;
+//
+//	private LocalDateTime dataEntrada;
+//
+//	private String pessoaModel;
+//
+//	private String placaCar;
+	
+	
 	public GarageBoxDTO (GarageBoxModel obj) {
+		this.id = obj.getId();
 		this.numeroBox = obj.getNumeroBox();
-		this.placaCar = obj.getPlacaCar();
-		this.marcaCar = obj.getMarcaCar();
-		this.modeloCar = obj.getModeloCar();
-		this.corCar = obj.getCorCar();
-		this.nomeResp = obj.getNomeResp();
 		this.defeitoCar = obj.getDefeitoCar();
+		this.entradaCar = obj.getEntradaCar();
 		this.mecanicoCar = obj.getMecanicoCar();
+		this.produtoModel = obj.getProdutoModel();
+		this.pessoaModel = obj.getPessoaModel();
+		//this.corProduto = obj.getProdutoModel().getCorProduto();
+		//this.descricao = obj.getProdutoModel().getDescricao();
+		//this.dataEntrada = obj.getProdutoModel().getDataEntrada();
 	}
 }
 

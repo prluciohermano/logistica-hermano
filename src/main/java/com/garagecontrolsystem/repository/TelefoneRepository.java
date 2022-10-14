@@ -13,8 +13,8 @@ import com.garagecontrolsystem.entity.TelefoneModel;
 
 @Repository
 @Transactional
-public interface TelefoneRepository extends JpaRepository<TelefoneModel, UUID> {
+public interface TelefoneRepository extends JpaRepository<TelefoneModel, Long> {
 
 	@Query(value = "select t from TelefoneModel t where t.pessoa.id = ?1")
-	public List<TelefoneModel> getTelefones(UUID pessoaid);
+	public List<TelefoneModel> getTelefones(Long pessoaid);
 }

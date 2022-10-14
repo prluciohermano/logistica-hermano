@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
+import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.ProdutoModel;
 import com.garagecontrolsystem.repository.GarageBoxRepository;
 
 @Service
@@ -28,9 +30,9 @@ public class GarageBoxService {
 		return garageBoxRepository.save(garageBoxModel);
 	}
 
-	public boolean existsByPlacaCar(String placaCar) {
-		return garageBoxRepository.existsByPlacaCar(placaCar);
-	}
+//	public boolean existsByPlacaCar(String placaCar) {
+//		return garageBoxRepository.existsByPlacaCar(placaCar);
+//	}
 
 	public boolean existsByNumeroBox(String numeroBox) {
 		return garageBoxRepository.existsByNumeroBox(numeroBox);
@@ -40,7 +42,7 @@ public class GarageBoxService {
 		return garageBoxRepository.findAll(pageable);
 	}
 
-	public Optional<GarageBoxModel> findById(UUID id) {
+	public Optional<GarageBoxModel> findById(Long id) {
 		return garageBoxRepository.findById(id);
 	}
 
@@ -53,6 +55,11 @@ public class GarageBoxService {
 	public List<GarageBoxModel> findAll() {
 		return garageBoxRepository.findAll();
 	}
-	
+
+
+	public List<GarageBoxModel> findGarageBoxByNumeroBox(String nameBusca) {
+		return garageBoxRepository.findGarageBoxByNumeroBox(nameBusca);
+	}
+
 	
 }

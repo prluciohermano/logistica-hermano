@@ -17,7 +17,7 @@ public class TelefoneService {
 		this.telefoneRepository = telefoneRepository;
 	}
 	
-	public Optional<TelefoneModel> findById(UUID id) {
+	public Optional<TelefoneModel> findById(Long id) {
 		return telefoneRepository.findById(id);
 	}
 
@@ -25,11 +25,11 @@ public class TelefoneService {
 		return telefoneRepository.save(telefone);
 	}
 
-	public Object findByFoneById(UUID pessoaid) {
-		return telefoneRepository.getTelefones(pessoaid);
+	public Object findByFoneById(Long id) {
+		return telefoneRepository.getTelefones(id);
 	}
 
-	public TelefoneModel deleteById(UUID idtelefone) {
+	public TelefoneModel deleteById(Long idtelefone) {
 		telefoneRepository.deleteById(idtelefone);
 		return null;
 		

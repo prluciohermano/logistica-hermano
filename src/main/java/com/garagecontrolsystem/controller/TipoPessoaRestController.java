@@ -2,7 +2,6 @@ package com.garagecontrolsystem.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -22,45 +21,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.garagecontrolsystem.dto.PessoaDTO;
-import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
-import com.garagecontrolsystem.service.PessoaService;
+import com.garagecontrolsystem.service.TipoPessoaService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/pessoas")
-public class PessoaRestController {
+@RequestMapping("/api/tipopessoas")
+public class TipoPessoaRestController {
 	
 	@Autowired
-	private PessoaService pessoaService;
+	private TipoPessoaService tipoPessoaService;
 	
 	
 	@PostMapping //------------------------------------------------------ Salvar ---
 	@ResponseBody
-	public ResponseEntity<PessoaModel> savePessoa(@RequestBody @Valid PessoaModel pessoaModel){
+	public ResponseEntity<TipoPessoaModel> savePessoa(@RequestBody @Valid TipoPessoaModel tipoPessoaModel){
 		
-		PessoaModel pes = pessoaService.save(pessoaModel);
+		TipoPessoaModel pes = tipoPessoaService.save(tipoPessoaModel);
 		
-		return new ResponseEntity<PessoaModel>(pes, HttpStatus.OK);
+		return new ResponseEntity<TipoPessoaModel>(pes, HttpStatus.OK);
 	}
 
 	@GetMapping //---------------------------------------------=====----- Buscar Todos ---
 	@ResponseBody
-	public ResponseEntity<List<PessoaDTO>> findByOrderByNome(){	
+	public ResponseEntity<List<TipoPessoaModel>> findByOrderByNome(){	
 		
-		TipoPessoaModel tipo = new TipoPessoaModel();
 		
-		List<PessoaModel> list = pessoaService.findByOrderByNome();
-		List<PessoaDTO> listDTO = list.stream()
-									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		List<TipoPessoaModel> list = tipoPessoaService.findByOrderByNome();
+
+		return ResponseEntity.ok().body(list);
 	}
 
 	
 	@GetMapping("/{id}") //------------------------------------------------ Buscar ---
 	public ResponseEntity<Object> findByIdPessoa(@PathVariable Long id){
-		Optional<PessoaModel> obj = pessoaService.findById(id);
+		Optional<TipoPessoaModel> obj = tipoPessoaService.findById(id);
 		if(!obj.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
@@ -69,38 +64,37 @@ public class PessoaRestController {
 	
 	@DeleteMapping("/{id}") //---------------------------------------------- Deletar ---
 	public ResponseEntity<Object> deletePessoa(@PathVariable Long id){
-		Optional<PessoaModel> obj = pessoaService.findById(id);
+		Optional<TipoPessoaModel> obj = tipoPessoaService.findById(id);
 		if(!obj.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
-		pessoaService.deleteById(id);
+		tipoPessoaService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Pessoa excluída com sucesso!");		
 	}
 	
 	@PutMapping("/{id}") //-------------------------------------------------- Atualizar ---
 	public ResponseEntity<Object> updatePessoa(@PathVariable Long id,
-													@RequestBody @Valid PessoaDTO pessoaDTO){
+													@RequestBody @Valid TipoPessoaModel tipoPessoaModel){
 		
-		Optional<PessoaModel> objOptional = pessoaService.findById(id);
+		Optional<TipoPessoaModel> objOptional = tipoPessoaService.findById(id);
 		if(!objOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
 		
-		var pessoaModel = new PessoaModel();
-		BeanUtils.copyProperties(pessoaDTO, pessoaModel);
-		pessoaModel.setId(objOptional.get().getId());
-		return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoaModel));		
+		var tipoPessoa = new TipoPessoaModel();
+		BeanUtils.copyProperties(tipoPessoaModel, tipoPessoaModel);
+		tipoPessoaModel.setId(objOptional.get().getId());
+		return ResponseEntity.status(HttpStatus.OK).body(tipoPessoaService.save(tipoPessoa));		
 	}
 	
 	@RequestMapping("/nameBusca") //----------------------------------------- Buscar por nome ---
 	@ResponseBody
-	public ResponseEntity<List<PessoaDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
+	public ResponseEntity<List<TipoPessoaModel>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
 								
 		System.out.println(nameBusca);
-		List<PessoaModel> list = pessoaService.findPessoaByName(nameBusca.trim().toUpperCase());
-		List<PessoaDTO> listDTO = list.stream()
-									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
-		return new ResponseEntity<List<PessoaDTO>>(listDTO, HttpStatus.OK);
+		List<TipoPessoaModel> list = tipoPessoaService.findPessoaByName(nameBusca.trim().toUpperCase());
+		
+		return new ResponseEntity<List<TipoPessoaModel>>(list, HttpStatus.OK);
 	}
 		
 }

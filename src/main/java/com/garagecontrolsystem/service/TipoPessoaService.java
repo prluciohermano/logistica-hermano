@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.repository.TipoPessoaRepository;
 
@@ -36,4 +37,13 @@ public class TipoPessoaService {
 	public void deleteById(Long tipoPessoaId) {
 		tipoPessoaRepository.deleteById(tipoPessoaId);
 	}
+
+	public List<TipoPessoaModel> findByOrderByNome() {
+		return tipoPessoaRepository.findByOrderByNome();
+	}
+
+	public List<TipoPessoaModel> findPessoaByName(String nameBusca) {
+		return tipoPessoaRepository.findPessoaByName(nameBusca);
+	}
+
 }

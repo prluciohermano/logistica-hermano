@@ -1,12 +1,9 @@
 package com.garagecontrolsystem.dto;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import org.springframework.beans.BeanUtils;
-
+import com.garagecontrolsystem.entity.CategoriaModel;
 import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
 
@@ -18,18 +15,28 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProdutoDTO {
-	private String descProduto;
+	private Long id;
+	private String descricao;
 	private String anoModelo;
+	private String placaCar;
 	private String corProduto;
-	private Date dataEntrada;
+	private LocalDateTime dataEntrada;
 	private BigDecimal precoEntrada;
+	private CategoriaModel categoria;
+	private PessoaModel pessoaModel;
+
 	
 	public ProdutoDTO(ProdutoModel promod) {
-		this.descProduto = promod.getDescProduto();
+		this.id = promod.getId();
+		this.descricao = promod.getDescricao();
 		this.anoModelo = promod.getAnoModelo();
+		this.placaCar = promod.getPlacaCar();
 		this.corProduto = promod.getCorProduto();
 		this.dataEntrada = promod.getDataEntrada();
 		this.precoEntrada = promod.getPrecoEntrada();
+		this.categoria = promod.getCategoria();
+		this.pessoaModel = promod.getPessoaModel();
+
 	}
 
 }

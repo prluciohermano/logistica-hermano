@@ -6,15 +6,15 @@
 //
 //import javax.servlet.http.HttpServletRequest;
 //
+//import org.bouncycastle.jcajce.BCFKSLoadStoreParameter.SignatureAlgorithm;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 //import org.springframework.security.core.Authentication;
 //
-//import com.garagecontrolsystem.entity.Usuario;
+//import com.garagecontrolsystem.dto.UsuarioDTO;
 //
 //import io.jsonwebtoken.Claims;
 //import io.jsonwebtoken.Jws;
 //import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
 //import io.jsonwebtoken.security.Keys;
 //
 //public class TokenUtil {
@@ -26,7 +26,7 @@
 //	private static final String EMISSOR = "DevHermano";
 //	
 //	
-//	public static String createToken(Usuario usuario) {
+//	public static String createToken(UsuarioDTO usuario) {
 //		Key secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 //		
 //		String token = Jwts.builder()

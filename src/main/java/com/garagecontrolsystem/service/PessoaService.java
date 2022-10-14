@@ -2,7 +2,6 @@ package com.garagecontrolsystem.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -34,7 +33,7 @@ public class PessoaService {
 		return pessoaRepository.findAll(pageable);
 	}
 	
-	public Optional<PessoaModel> findById(UUID id) {
+	public Optional<PessoaModel> findById(Long id) {
 		return pessoaRepository.findById(id);
 	}
 	
@@ -42,12 +41,12 @@ public class PessoaService {
 		return pessoaRepository.findAll(PageRequest.of(0, 10, Sort.by("nome")));
 	}
 	
-	public List<PessoaModel> findAllPessoa() {
-		return pessoaRepository.findAll();
+	public List<PessoaModel> findByOrderByNome() {
+		return pessoaRepository.findByOrderByNome();
 	}
 
 	@Transactional
-	public void deleteById(UUID pessoaId) {
+	public void deleteById(Long pessoaId) {
 		pessoaRepository.deleteById(pessoaId);
 	}
 

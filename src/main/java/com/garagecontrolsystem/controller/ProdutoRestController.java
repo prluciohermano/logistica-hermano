@@ -1,7 +1,9 @@
 package com.garagecontrolsystem.controller;
 
-import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -19,11 +21,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.garagecontrolsystem.dto.GarageBoxDTO;
 import com.garagecontrolsystem.dto.ProdutoDTO;
+import com.garagecontrolsystem.entity.GarageBoxModel;
+import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
 import com.garagecontrolsystem.service.ProdutoService;
 
@@ -34,6 +38,7 @@ public class ProdutoRestController {
 
 	@Autowired
 	private ProdutoService produtoService;
+
 	
 	@GetMapping("/{id}") /* ******************************************** Buscar Produto por ID */
 	public ResponseEntity<ProdutoModel> findById(@PathVariable Long id){
@@ -41,14 +46,44 @@ public class ProdutoRestController {
 		return ResponseEntity.ok().body(obj);	
 	}
 
-	@PostMapping /* ***************************************************** Salvar Produto */
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ProdutoModel> create(@Valid @RequestParam(value = "categoria", defaultValue = "0") Long id_cat,
-							   @RequestBody ProdutoModel obj) {
-		ProdutoModel newObj = produtoService.create(id_cat, obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/produtos/{id}").buildAndExpand(newObj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	
+	@PostMapping //------------------------------------------------------ Salvar Produto ---
+	@ResponseBody
+	public ResponseEntity<ProdutoModel> saveProduto(@RequestBody @Valid ProdutoModel produtoModel){
+		
+		produtoModel.setDataEntrada(LocalDateTime.now(ZoneId.of("UTC")));
+		ProdutoModel pro = produtoService.save(produtoModel);
+		
+		return new ResponseEntity<ProdutoModel>(pro, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("/{boxId}/garage") //------------------------------------------------------ Salvar Produto ---
+	@ResponseBody
+	public ResponseEntity<GarageBoxModel> garageInById(@PathVariable Long boxId,
+			@RequestBody @Valid GarageBoxModel garageBoxModel){
+		
+		garageBoxModel.setEntradaCar(LocalDateTime.now(ZoneId.of("UTC")));
+		
+		
+//		garageBoxModel.getProdutoModel().getPessoaModel().getId();
+//		System.out.println(garageBoxModel);
+		
+		//ResponseEntity<GarageBoxModel> pro = produtoService.saveByGarageInById(boxId, garageBoxModel);
+		
+		//return new ResponseEntity<GarageBoxModel>(pro, HttpStatus.OK);
+		
+		return produtoService.saveByGarageInById(boxId, garageBoxModel);
+	}
+	
+	
+	@GetMapping("/{produtoId}/garage") //------------------------------------------------------ Salvar Produto ---
+	public List<GarageBoxModel> findAllByGarageId(@PathVariable Long produtoId){
+				
+		return produtoService.findAllByProdutoId(produtoId);
+	}
+	
+	
 	
 	@GetMapping /* ***************************************************** Buscar Produto por categoria */
 	public ResponseEntity<List<ProdutoDTO>> findAllByCategoria(
@@ -59,9 +94,9 @@ public class ProdutoRestController {
 		return ResponseEntity.ok().body(listDTO);	
 	}
 	
-	@GetMapping("/") /* ***************************************************** Buscar Produto por categoria */
-	public ResponseEntity<List<ProdutoDTO>> findAll(){
-		List<ProdutoModel> list = produtoService.findAll();
+	@GetMapping("/") /* **************************************** Buscar Produto por ordem de descrição */
+	public ResponseEntity<List<ProdutoDTO>> findByOrderByDescricao(){
+		List<ProdutoModel> list = produtoService.findByOrderByDescricao();
 		List<ProdutoDTO> listDTO = list.stream()
 									   .map(promod -> new ProdutoDTO(promod)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);	
@@ -82,8 +117,31 @@ public class ProdutoRestController {
 	}
 	
 	@DeleteMapping("/{id}") /* ******************************************** Deletar Produto por ID */
-	public ResponseEntity<Void> delete(@PathVariable Long id){produtoService.delete(id);
+	public ResponseEntity<ProdutoDTO> delete(@PathVariable Long id){produtoService.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping("/nameBusca")
+	@ResponseBody
+	public ResponseEntity<List<ProdutoDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
+								
+		System.out.println(nameBusca);
+		List<ProdutoModel> list = produtoService.findProdutoByName(nameBusca.trim().toUpperCase());
+		List<ProdutoDTO> listDTO = list.stream()
+									  .map(obj -> new ProdutoDTO(obj)).collect(Collectors.toList());
+		return new ResponseEntity<List<ProdutoDTO>>(listDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping("/placaCarro") //----------------------------------------- Buscar por nome ---
+	@ResponseBody
+	public ResponseEntity<List<ProdutoDTO>> findByPlaca(@RequestParam(name="placaCar") String placaCarro) {
+
+		List<ProdutoModel> result = produtoService.findByPlaca(placaCarro.trim().toUpperCase());
+		List<ProdutoDTO> listDTO = result.stream()
+				  					.map(obj -> new ProdutoDTO(obj)).collect(Collectors.toList());
+		return new ResponseEntity<List<ProdutoDTO>>(listDTO, HttpStatus.OK);
+		
+		
 	}
 
 }

@@ -2,6 +2,7 @@ package com.garagecontrolsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,11 @@ public class LogisticaHermanoApplication {
 	
 	@RequestMapping ("/restrito/arearestrita")
 	public String restrito() {
+		return "restrito/arearestrita.html";
+	}
+	
+	@RequestMapping ("/arearestrita")
+	public String restritoo() {
 		return "restrito/arearestrita.html";
 	}
 	
