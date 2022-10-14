@@ -95,6 +95,7 @@ public class PessoaModel implements Serializable {
 	@JoinColumn(name = "tipospessoa_id")
 	private TipoPessoaModel tipospessoa;
 	
+	
 	@Enumerated(EnumType.STRING)
 	private Cargo cargo;
 	
