@@ -1,10 +1,7 @@
  package com.garagecontrolsystem.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -25,10 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.garagecontrolsystem.dto.GarageBoxDTO;
-import com.garagecontrolsystem.dto.PessoaDTO;
 import com.garagecontrolsystem.dto.ProdutoDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
-import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
 import com.garagecontrolsystem.service.GarageBoxService;
 import com.garagecontrolsystem.service.ProdutoService;
@@ -48,9 +43,6 @@ public class GarageBoxController {
 		this.produtoService = produtoService;
 	}
 	
-	
-	
-
 
 	@PostMapping /******************************* Adicionar vagas */
 	public ResponseEntity<Object> saveGarageBox(@RequestBody @Valid GarageBoxDTO garageBoxDTO, @Valid ProdutoDTO produtoDTO) {
@@ -67,8 +59,8 @@ public class GarageBoxController {
 	
 	
 	@GetMapping /******************************* Buscar todas as vagas */
-	public ResponseEntity<List<GarageBoxDTO>> findAll(){
-		List<GarageBoxModel> list = garageBoxService.findAll();
+	public ResponseEntity<List<GarageBoxDTO>> findAllByNumeroBox(){
+		List<GarageBoxModel> list = garageBoxService.findAllByNumeroBox();
 		List<GarageBoxDTO> listDTO = list.stream()
 									.map(obj -> new GarageBoxDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(listDTO);

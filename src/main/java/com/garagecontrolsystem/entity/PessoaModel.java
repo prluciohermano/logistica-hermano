@@ -2,11 +2,9 @@ package com.garagecontrolsystem.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,13 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.garagecontrolsystem.enums.Cargo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -94,11 +89,7 @@ public class PessoaModel implements Serializable {
 	@ManyToOne 
 	@JoinColumn(name = "tipospessoa_id")
 	private TipoPessoaModel tipospessoa;
-	
-	
-	@Enumerated(EnumType.STRING)
-	private Cargo cargo;
-	
+		
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	//@Temporal(TemporalType.DATE)
 	private LocalDateTime dataNasci;
@@ -112,5 +103,16 @@ public class PessoaModel implements Serializable {
 	@OneToMany(mappedBy = "pessoaModel")
 	private List<ProdutoModel> produtosModel;
 	
-
+	
+	private Integer cargo;
+	
+	public Cargo getCargo() {
+		return Cargo.valueOf(cargo);
+	}
+	
+	public void setCargo(Cargo cargo) {
+		if (cargo != null) {
+			this.cargo = cargo.getCode();
+		}
+	}
 }

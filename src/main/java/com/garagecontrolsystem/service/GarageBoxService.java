@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
@@ -59,6 +60,10 @@ public class GarageBoxService {
 
 	public List<GarageBoxModel> findGarageBoxByNumeroBox(String nameBusca) {
 		return garageBoxRepository.findGarageBoxByNumeroBox(nameBusca);
+	}
+
+	public List<GarageBoxModel> findAllByNumeroBox() {
+		return garageBoxRepository.findAll(Sort.by(Sort.Direction.ASC, "numeroBox"));
 	}
 
 	

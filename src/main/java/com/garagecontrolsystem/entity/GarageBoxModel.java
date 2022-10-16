@@ -54,8 +54,8 @@ public class GarageBoxModel implements Serializable {
 	private ProdutoModel produtoModel;
 	
 	
-	@ManyToOne
-	private PessoaModel pessoaModel;
+//	@ManyToOne
+//	private PessoaModel pessoaModel;
 
 	
 	public ProdutoModel getProdutoModel() {
@@ -66,13 +66,13 @@ public class GarageBoxModel implements Serializable {
 		this.produtoModel = produtoModel;
 	}
 
-	public PessoaModel getPessoaModel() {
-		return pessoaModel;
-	}
-
-	public void setPessoaModel(PessoaModel pessoaModel) {
-		this.pessoaModel = pessoaModel;
-	}
+//	public PessoaModel getPessoaModel() {
+//		return pessoaModel;
+//	}
+//
+//	public void setPessoaModel(PessoaModel pessoaModel) {
+//		this.pessoaModel = pessoaModel;
+//	}
 
 	
 	

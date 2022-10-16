@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.garagecontrolsystem.dto.ProdutoDTO;
 import com.garagecontrolsystem.entity.CategoriaModel;
 import com.garagecontrolsystem.entity.GarageBoxModel;
+import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
 import com.garagecontrolsystem.repository.GarageBoxRepository;
 import com.garagecontrolsystem.repository.ProdutoRepository;

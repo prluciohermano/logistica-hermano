@@ -52,6 +52,7 @@ public class ProdutoRestController {
 	public ResponseEntity<ProdutoModel> saveProduto(@RequestBody @Valid ProdutoModel produtoModel){
 		
 		produtoModel.setDataEntrada(LocalDateTime.now(ZoneId.of("UTC")));
+				
 		ProdutoModel pro = produtoService.save(produtoModel);
 		
 		return new ResponseEntity<ProdutoModel>(pro, HttpStatus.OK);

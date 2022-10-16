@@ -18,11 +18,16 @@ public interface GarageBoxRepository extends JpaRepository<GarageBoxModel, Long>
 	
 	boolean existsByNumeroBox(String numeroBox);
 	
-	@Query(value = "select p from GarageBoxModel p where upper(trim(p.numeroBox)) like %?1% ")
+	@Query(value = "select p from GarageBoxModel p where upper(trim(p.numeroBox)) like %?1% order by numeroBox")
 	List<GarageBoxModel> findGarageBoxByNumeroBox(String nameBusca);
 
+	
 	List<GarageBoxModel> findByProdutoModel(ProdutoModel produtoModel);
 
 	@Query(value = "select p from ProdutoModel p where upper(trim(p.placaCar)) like %?1% ")
 	List<ProdutoModel> findByPlaca(String placaCarro);
+
+	
+//	@Query(value = "SELECT * FROM GarageBoxModel ORDER BY numeroBox", countQuery = "SELECT count(*) FROM numeroBox", nativeQuery = true)
+//	List<GarageBoxModel> findAllByNumeroBox();
 }

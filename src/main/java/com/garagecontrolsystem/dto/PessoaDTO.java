@@ -1,8 +1,11 @@
 package com.garagecontrolsystem.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
-import com.garagecontrolsystem.entity.Cargo;
+import com.garagecontrolsystem.enums.Cargo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +21,7 @@ public class PessoaDTO {
     private String cpf;
     private String rg;
     private String sexo;
+    private LocalDateTime dataNasci;
     private String cep;
     private String rua;
     private String numero;
@@ -37,6 +41,7 @@ public class PessoaDTO {
 		this.cpf = obj.getCpf();
 		this.rg = obj.getRg();
 		this.sexo = obj.getSexo();
+		this.dataNasci = obj.getDataNasci();
 		this.cep = obj.getCep();
 		this.rua = obj.getRua();
 		this.numero = obj.getNumero();
@@ -47,7 +52,6 @@ public class PessoaDTO {
 		this.email = obj.getEmail();
 		this.tipospessoa = obj.getTipospessoa();
 		this.cargo = obj.getCargo();
-		
 	}
 
 

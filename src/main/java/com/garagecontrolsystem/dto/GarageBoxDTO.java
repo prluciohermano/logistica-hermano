@@ -17,38 +17,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GarageBoxDTO {
 	
-	//@NotBlank
+	@NotBlank
 	private Long id;
 	
-	//@NotBlank
+	@NotBlank
 	private String numeroBox;
 	
-	//@NotBlank
-	private PessoaModel pessoaModel;
-	
-	//@NotBlank
+	@NotBlank
 	private ProdutoModel produtoModel;
 	
-	//@NotBlank
+	@NotBlank
 	private String defeitoCar;
 	
-	//@NotBlank
-//	private String corProduto;
-	
-	//@NotBlank
+	@NotBlank
 	private LocalDateTime entradaCar;
 	
-	//@NotBlank
+	@NotBlank
 	private String mecanicoCar;
-	
-
-//	private String descricao;
-//
-//	private LocalDateTime dataEntrada;
-//
-//	private String pessoaModel;
-//
-//	private String placaCar;
 	
 	
 	public GarageBoxDTO (GarageBoxModel obj) {
@@ -58,10 +43,6 @@ public class GarageBoxDTO {
 		this.entradaCar = obj.getEntradaCar();
 		this.mecanicoCar = obj.getMecanicoCar();
 		this.produtoModel = obj.getProdutoModel();
-		this.pessoaModel = obj.getPessoaModel();
-		//this.corProduto = obj.getProdutoModel().getCorProduto();
-		//this.descricao = obj.getProdutoModel().getDescricao();
-		//this.dataEntrada = obj.getProdutoModel().getDataEntrada();
 	}
 }
 
