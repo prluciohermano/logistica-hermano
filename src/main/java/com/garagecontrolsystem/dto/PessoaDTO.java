@@ -1,6 +1,5 @@
 package com.garagecontrolsystem.dto;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.garagecontrolsystem.entity.PessoaModel;
@@ -21,7 +20,7 @@ public class PessoaDTO {
     private String cpf;
     private String rg;
     private String sexo;
-    private LocalDateTime dataNasci;
+    private Date dataNasci;
     private String cep;
     private String rua;
     private String numero;

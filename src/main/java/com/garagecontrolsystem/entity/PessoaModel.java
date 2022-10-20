@@ -16,6 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import com.garagecontrolsystem.enums.Cargo;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,46 +44,46 @@ public class PessoaModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@NotBlank(message = "Campo Nome não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Nome não pode ser vazio ou nulo!")
 	@Column(name = "nome", length = 100)
 	private String nome;
 	
-	//@NotBlank(message = "Campo CPF não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo CPF não pode ser vazio ou nulo!")
 	@Column(name = "cpf", length = 11)
 	private String cpf;
 	
-	//@NotBlank(message = "Campo Registro Geral não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Registro Geral não pode ser vazio ou nulo!")
 	@Column(name = "rg", length = 100)
 	private String rg;
 	
-	//@NotBlank(message = "Campo Sexo não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Sexo não pode ser vazio ou nulo!")
 	@Column(name = "sexo", length = 100)
 	private String sexo;
 	
-	//@NotBlank(message = "Campo CEP não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo CEP não pode ser vazio ou nulo!")
 	@Column(name = "cep", length = 100)
 	private String cep;
 	
-	//@NotBlank(message = "Campo Rua não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Rua não pode ser vazio ou nulo!")
 	@Column(name = "rua", length = 100)
 	private String rua;
 	
-	//@NotBlank(message = "Campo Número não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Número não pode ser vazio ou nulo!")
 	@Column(name = "numero", length = 100)
 	private String numero;
 	
-	//@NotBlank(message = "Campo Bairro não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Bairro não pode ser vazio ou nulo!")
 	@Column(name = "bairro", length = 100)
 	private String bairro;
 	
 	@Column(name = "comp", length = 100)
 	private String comp;
 	
-	//@NotBlank(message = "Campo Cidade não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Cidade não pode ser vazio ou nulo!")
 	@Column(name = "cidade", length = 100)
 	private String cidade;
 	
-	//@NotBlank(message = "Campo Estado não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo Estado não pode ser vazio ou nulo!")
 	@Column(name = "uf", length = 100)
 	private String uf;
 		
@@ -91,11 +96,12 @@ public class PessoaModel implements Serializable {
 	private TipoPessoaModel tipospessoa;
 		
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	//@Temporal(TemporalType.DATE)
-	private LocalDateTime dataNasci;
+	@Temporal(TemporalType.DATE)
+	private Date dataNasci;
 	
 	
-	//@NotBlank(message = "Campo Nome não pode ser vazio ou nulo!")
+	@NotBlank(message = "Campo e-mail não pode ser vazio ou nulo!")
+	@Email(message = "Campo e-mail não pode ser vazio ou nulo!")
 	@Column(name = "email", length = 50)
 	private String email;
 	
@@ -103,16 +109,8 @@ public class PessoaModel implements Serializable {
 	@OneToMany(mappedBy = "pessoaModel")
 	private List<ProdutoModel> produtosModel;
 	
+	//@NotBlank(message = "Campo Cargo não pode ser vazio ou nulo!")
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
 	
-	private Integer cargo;
-	
-	public Cargo getCargo() {
-		return Cargo.valueOf(cargo);
-	}
-	
-	public void setCargo(Cargo cargo) {
-		if (cargo != null) {
-			this.cargo = cargo.getCode();
-		}
-	}
 }

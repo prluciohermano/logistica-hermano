@@ -29,6 +29,7 @@ import com.garagecontrolsystem.dto.ProdutoDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
 import com.garagecontrolsystem.entity.PessoaModel;
 import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.repository.GarageBoxRepository;
 import com.garagecontrolsystem.service.ProdutoService;
 
 @CrossOrigin("*")
@@ -39,6 +40,8 @@ public class ProdutoRestController {
 	@Autowired
 	private ProdutoService produtoService;
 
+	@Autowired
+	GarageBoxRepository garageBoxRepository;
 	
 	@GetMapping("/{id}") /* ******************************************** Buscar Produto por ID */
 	public ResponseEntity<ProdutoModel> findById(@PathVariable Long id){
@@ -62,9 +65,14 @@ public class ProdutoRestController {
 	@PostMapping("/{boxId}/garage") //------------------------------------------------------ Salvar Produto ---
 	@ResponseBody
 	public ResponseEntity<GarageBoxModel> garageInById(@PathVariable Long boxId,
-			@RequestBody @Valid GarageBoxModel garageBoxModel){
+			@RequestBody @Valid GarageBoxModel garageBoxModel, GarageBoxDTO garageBoxDTO){
+		
+		if(garageBoxRepository.existsByNumeroBox(garageBoxDTO.getNumeroBox())) {
+			return null;}
 		
 		garageBoxModel.setEntradaCar(LocalDateTime.now(ZoneId.of("UTC")));
+		
+		
 		
 		
 //		garageBoxModel.getProdutoModel().getPessoaModel().getId();

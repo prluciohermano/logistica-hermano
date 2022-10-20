@@ -14,7 +14,7 @@ import com.garagecontrolsystem.entity.ProdutoModel;
 @Repository
 public interface GarageBoxRepository extends JpaRepository<GarageBoxModel, Long>{
 
-//	boolean existsByPlacaCar(String placaCar);
+	//boolean existsByPlacaCar(String placaCar);
 	
 	boolean existsByNumeroBox(String numeroBox);
 	

@@ -1,31 +1,40 @@
 package com.garagecontrolsystem.enums;
 
 public enum Cargo {
-
-	DIRETOR(1),
-	SUPERVISOR(2),
-	GERENTE(3),
-	VENDEDOR(4),
-	FINANCEIRO(5),
-	SERVIÇOS(6),
-	MANUTENÇÃO(7);
-
-	private int code;
 	
-	private Cargo(int code) {
-		this.code = code;
-	}
+	DIRETOR,
+	SUPERVISOR,
+	GERENTE,
+	VENDEDOR,
+	FINANCEIRO,
+	SERVIÇOS,
+	MANUTENÇÃO
+	
 
-	public int getCode() {
-		return code;
-	}
-
-	public static Cargo valueOf(int code) {
-		for (Cargo value : Cargo.values())
-			if (code == value.getCode()) {
-				return value;
-			}
-		throw new IllegalArgumentException("Código do Cargo inválido");
-		
-	}
+//	DIRETOR(1),
+//	SUPERVISOR(2),
+//	GERENTE(3),
+//	VENDEDOR(4),
+//	FINANCEIRO(5),
+//	SERVIÇOS(6),
+//	MANUTENÇÃO(7);
+//
+//	private int code;
+//	
+//	private Cargo(int code) {
+//		this.code = code;
+//	}
+//
+//	public int getCode() {
+//		return code;
+//	}
+//
+//	public static Cargo valueOf(int code) {
+//		for (Cargo value : Cargo.values())
+//			if (code == value.getCode()) {
+//				return value;
+//			}
+//		throw new IllegalArgumentException("Código do Cargo inválido");
+//		
+//	}
 }
