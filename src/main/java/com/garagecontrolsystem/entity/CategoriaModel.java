@@ -40,14 +40,14 @@ public class CategoriaModel {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "categoria")
-	private List<ProdutoModel> produtos = new ArrayList<>();
+	private List<Veiculo> produtos = new ArrayList<>();
 	
 	
-	public List<ProdutoModel> getProdutos() {
+	public List<Veiculo> getProdutos() {
 		return produtos;
 	}
 
-	public void setProdutos(List<ProdutoModel> produtos) {
+	public void setProdutos(List<Veiculo> produtos) {
 		this.produtos = produtos;
 	}
 }

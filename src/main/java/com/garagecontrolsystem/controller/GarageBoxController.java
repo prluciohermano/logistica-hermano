@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.garagecontrolsystem.dto.GarageBoxDTO;
-import com.garagecontrolsystem.dto.ProdutoDTO;
+import com.garagecontrolsystem.dto.VeiculoDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
-import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.entity.Veiculo;
 import com.garagecontrolsystem.service.GarageBoxService;
-import com.garagecontrolsystem.service.ProdutoService;
+import com.garagecontrolsystem.service.VeiculoService;
 
 
 @CrossOrigin("*")
@@ -36,21 +36,21 @@ public class GarageBoxController {
 
 	final GarageBoxService garageBoxService;
 	
-	final ProdutoService produtoService;
+	final VeiculoService produtoService;
 
-	public GarageBoxController(GarageBoxService garageBoxService, ProdutoService produtoService) {
+	public GarageBoxController(GarageBoxService garageBoxService, VeiculoService produtoService) {
 		this.garageBoxService = garageBoxService;
 		this.produtoService = produtoService;
 	}
 	
 
 	@PostMapping /******************************* Adicionar vagas */
-	public ResponseEntity<Object> saveGarageBox(@RequestBody @Valid GarageBoxDTO garageBoxDTO, @Valid ProdutoDTO produtoDTO) {
+	public ResponseEntity<Object> saveGarageBox(@RequestBody @Valid GarageBoxDTO garageBoxDTO, @Valid VeiculoDTO produtoDTO) {
 					
 		if(garageBoxService.existsByNumeroBox(garageBoxDTO.getNumeroBox())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: Esse Box já está ocupado");}
 		
-		ProdutoModel produtoModel = new ProdutoModel();
+		Veiculo produtoModel = new Veiculo();
 		GarageBoxModel garageBoxModel = new GarageBoxModel();
 		BeanUtils.copyProperties(garageBoxDTO, garageBoxModel);
 		BeanUtils.copyProperties(produtoDTO, produtoModel);

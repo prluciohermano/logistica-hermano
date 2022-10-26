@@ -38,14 +38,14 @@ public class TipoPessoaModel  implements Serializable {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "tipospessoa")
-	private List<PessoaModel> pessoasModel = new ArrayList<PessoaModel>();
+	private List<Pessoa> pessoasModel = new ArrayList<Pessoa>();
 
 	
-	public List<PessoaModel> getPessoasModel() {
+	public List<Pessoa> getPessoasModel() {
 		return pessoasModel;
 	}
 	
-	public void setPessoasModel(List<PessoaModel> pessoasModel) {
+	public void setPessoasModel(List<Pessoa> pessoasModel) {
 		this.pessoasModel = pessoasModel;
 	}
 

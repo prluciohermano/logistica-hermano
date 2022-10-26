@@ -11,46 +11,46 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.Pessoa;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<PessoaModel, Long>{
+public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 
-	@Query(value = "select p from PessoaModel p where upper(trim(p.nome)) like %?1% order by nome")
-	List<PessoaModel> findPessoaByName(String nome);
+	@Query(value = "select p from Pessoa p where upper(trim(p.nome)) like %?1% order by nome")
+	List<Pessoa> findPessoaByName(String nome);
 	
-	@Query(value = "select p from PessoaModel p where upper(trim(p.nome)) like %?1% and p.sexo = ?2 order by nome")
-	List<PessoaModel> findPessoaByNameSexo(String nome, String sexo);
+	@Query(value = "select p from Pessoa p where upper(trim(p.nome)) like %?1% and p.sexo = ?2 order by nome")
+	List<Pessoa> findPessoaByNameSexo(String nome, String sexo);
 
 	
-	Optional<PessoaModel> findById(Long id);
+	Optional<Pessoa> findById(Long id);
 
-	public List<PessoaModel> findByOrderByNome();
+	public List<Pessoa> findByOrderByNome();
 	
 	
 	
 
-	@Query(value = "select p from PessoaModel p where p.sexo =  ?1")
-	List<PessoaModel> findPessoaBySexo(String sexo);
+	@Query(value = "select p from Pessoa p where p.sexo =  ?1")
+	List<Pessoa> findPessoaBySexo(String sexo);
 
-	default Page<PessoaModel> findPessoaByNamePage(String nome, Pageable pageable){
+	default Page<Pessoa> findPessoaByNamePage(String nome, Pageable pageable){
 		
-		PessoaModel pessoa = new PessoaModel();
+		Pessoa pessoa = new Pessoa();
 		pessoa.setNome(nome);
 		
 		/* Configurando a pesquisa para consultar com partes do nome com páginas */
 		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
 			.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 		
-		Example<PessoaModel> example = Example.of(pessoa, exampleMatcher);
+		Example<Pessoa> example = Example.of(pessoa, exampleMatcher);
 		
-		Page<PessoaModel> pessoas = findAll(example, pageable);
+		Page<Pessoa> pessoas = findAll(example, pageable);
 		return pessoas;
 	}
 	
-	default Page<PessoaModel> findPessoaBySexoPage(String nome, String sexo, Pageable pageable){
+	default Page<Pessoa> findPessoaBySexoPage(String nome, String sexo, Pageable pageable){
 		
-		PessoaModel pessoa = new PessoaModel();
+		Pessoa pessoa = new Pessoa();
 		pessoa.setNome(nome);
 		pessoa.setSexo(sexo);
 		
@@ -59,9 +59,9 @@ public interface PessoaRepository extends JpaRepository<PessoaModel, Long>{
 			.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
 			.withMatcher("sexo", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 		
-		Example<PessoaModel> example = Example.of(pessoa, exampleMatcher);
+		Example<Pessoa> example = Example.of(pessoa, exampleMatcher);
 		
-		Page<PessoaModel> pessoas = findAll(example, pageable);
+		Page<Pessoa> pessoas = findAll(example, pageable);
 		return pessoas;
 	}
 

@@ -31,13 +31,7 @@ public class GarageBoxModel implements Serializable {
 	
 	@Column(nullable = false, unique = true, length = 10)
 	private String numeroBox;
-	
-//	@Column(nullable = false, unique = true, length = 7)
-//	private String placaCar;
-	
-//	@Column(length = 130)
-//	private String nomeResp;
-	
+		
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	//@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime entradaCar;
@@ -50,30 +44,15 @@ public class GarageBoxModel implements Serializable {
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "produto_id")
-	private ProdutoModel produtoModel;
+	@JoinColumn(name = "veiculo_id")
+	private Veiculo veiculo;
 	
 	
-//	@ManyToOne
-//	private PessoaModel pessoaModel;
-
-	
-	public ProdutoModel getProdutoModel() {
-		return produtoModel;
+	public Veiculo getVeiculo() {
+		return veiculo;
 	}
 
-	public void setProdutoModel(ProdutoModel produtoModel) {
-		this.produtoModel = produtoModel;
-	}
-
-//	public PessoaModel getPessoaModel() {
-//		return pessoaModel;
-//	}
-//
-//	public void setPessoaModel(PessoaModel pessoaModel) {
-//		this.pessoaModel = pessoaModel;
-//	}
-
-	
-	
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}	
 }

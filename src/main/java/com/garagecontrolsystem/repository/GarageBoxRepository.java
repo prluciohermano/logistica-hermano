@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
 
-import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.entity.Veiculo;
 
 @Repository
 public interface GarageBoxRepository extends JpaRepository<GarageBoxModel, Long>{
@@ -22,10 +22,10 @@ public interface GarageBoxRepository extends JpaRepository<GarageBoxModel, Long>
 	List<GarageBoxModel> findGarageBoxByNumeroBox(String nameBusca);
 
 	
-	List<GarageBoxModel> findByProdutoModel(ProdutoModel produtoModel);
+	List<GarageBoxModel> findByVeiculo(Veiculo produtoModel);
 
-	@Query(value = "select p from ProdutoModel p where upper(trim(p.placaCar)) like %?1% ")
-	List<ProdutoModel> findByPlaca(String placaCarro);
+	@Query(value = "select p from Veiculo p where upper(trim(p.placaCar)) like %?1% ")
+	List<Veiculo> findByPlaca(String placaCarro);
 
 	
 //	@Query(value = "SELECT * FROM GarageBoxModel ORDER BY numeroBox", countQuery = "SELECT count(*) FROM numeroBox", nativeQuery = true)

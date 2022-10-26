@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.garagecontrolsystem.dto.PessoaDTO;
-import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.service.PessoaService;
 
@@ -38,11 +38,11 @@ public class PessoaRestController {
 	
 	@PostMapping //------------------------------------------------------ Salvar ---
 	@ResponseBody
-	public ResponseEntity<PessoaModel> savePessoa(@RequestBody @Valid PessoaModel pessoaModel){
+	public ResponseEntity<Pessoa> savePessoa(@RequestBody @Valid Pessoa pessoa){
 		
-		PessoaModel pes = pessoaService.save(pessoaModel);
+		Pessoa pes = pessoaService.save(pessoa);
 		
-		return new ResponseEntity<PessoaModel>(pes, HttpStatus.OK);
+		return new ResponseEntity<Pessoa>(pes, HttpStatus.OK);
 	}
 
 	@GetMapping //---------------------------------------------=====----- Buscar Todos ---
@@ -51,7 +51,7 @@ public class PessoaRestController {
 		
 		TipoPessoaModel tipo = new TipoPessoaModel();
 		
-		List<PessoaModel> list = pessoaService.findByOrderByNome();
+		List<Pessoa> list = pessoaService.findByOrderByNome();
 		List<PessoaDTO> listDTO = list.stream()
 									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
@@ -60,16 +60,16 @@ public class PessoaRestController {
 	
 	@GetMapping("/{id}") //------------------------------------------------ Buscar ---
 	public ResponseEntity<Object> findByIdPessoa(@PathVariable Long id){
-		Optional<PessoaModel> obj = pessoaService.findById(id);
-		if(!obj.isPresent()) {
+		Optional<Pessoa> pessoa = pessoaService.findById(id);
+		if(!pessoa.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(obj.get());		
+		return ResponseEntity.status(HttpStatus.OK).body(pessoa.get());		
 	}
 	
 	@DeleteMapping("/{id}") //---------------------------------------------- Deletar ---
 	public ResponseEntity<Object> deletePessoa(@PathVariable Long id){
-		Optional<PessoaModel> obj = pessoaService.findById(id);
+		Optional<Pessoa> obj = pessoaService.findById(id);
 		if(!obj.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
@@ -81,15 +81,15 @@ public class PessoaRestController {
 	public ResponseEntity<Object> updatePessoa(@PathVariable Long id,
 													@RequestBody @Valid PessoaDTO pessoaDTO){
 		
-		Optional<PessoaModel> objOptional = pessoaService.findById(id);
+		Optional<Pessoa> objOptional = pessoaService.findById(id);
 		if(!objOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada!");
 		}
 		
-		var pessoaModel = new PessoaModel();
-		BeanUtils.copyProperties(pessoaDTO, pessoaModel);
-		pessoaModel.setId(objOptional.get().getId());
-		return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoaModel));		
+		var pessoa = new Pessoa();
+		BeanUtils.copyProperties(pessoaDTO, pessoa);
+		pessoa.setId(objOptional.get().getId());
+		return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));		
 	}
 	
 	@RequestMapping("/nameBusca") //----------------------------------------- Buscar por nome ---
@@ -97,7 +97,7 @@ public class PessoaRestController {
 	public ResponseEntity<List<PessoaDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
 								
 		System.out.println(nameBusca);
-		List<PessoaModel> list = pessoaService.findPessoaByName(nameBusca.trim().toUpperCase());
+		List<Pessoa> list = pessoaService.findPessoaByName(nameBusca.trim().toUpperCase());
 		List<PessoaDTO> listDTO = list.stream()
 									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return new ResponseEntity<List<PessoaDTO>>(listDTO, HttpStatus.OK);

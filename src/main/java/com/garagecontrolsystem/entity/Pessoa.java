@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.garagecontrolsystem.enums.Cargo;
 
@@ -36,7 +37,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "TB_PESSOA")
-public class PessoaModel implements Serializable {
+public class Pessoa implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -106,10 +107,10 @@ public class PessoaModel implements Serializable {
 	private String email;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pessoaModel")
-	private List<ProdutoModel> produtosModel;
+	@OneToMany(mappedBy = "pessoa")
+	private List<Veiculo> produtos;
 	
-	//@NotBlank(message = "Campo Cargo não pode ser vazio ou nulo!")
+	@NotNull(message = "Campo Cargo não pode ser vazio ou nulo!")
 	@Enumerated(EnumType.STRING)
 	private Cargo cargo;
 	

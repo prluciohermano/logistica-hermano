@@ -1,42 +1,26 @@
 package com.garagecontrolsystem.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-import com.garagecontrolsystem.entity.CategoriaModel;
-import com.garagecontrolsystem.entity.PessoaModel;
-import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.entity.Produto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class ProdutoDTO {
-	private Long id;
-	private String descricao;
-	private String anoModelo;
-	private String placaCar;
-	private String corProduto;
-	private LocalDateTime dataEntrada;
-	private BigDecimal precoEntrada;
-	private CategoriaModel categoria;
-	private PessoaModel pessoaModel;
-
 	
-	public ProdutoDTO(ProdutoModel promod) {
-		this.id = promod.getId();
-		this.descricao = promod.getDescricao();
-		this.anoModelo = promod.getAnoModelo();
-		this.placaCar = promod.getPlacaCar();
-		this.corProduto = promod.getCorProduto();
-		this.dataEntrada = promod.getDataEntrada();
-		this.precoEntrada = promod.getPrecoEntrada();
-		this.categoria = promod.getCategoria();
-		this.pessoaModel = promod.getPessoaModel();
-
-	}
-
+	private Long id;
+    private String descricao;
+    private BigDecimal preco;
+    
+    
+    public ProdutoDTO(Produto obj) {
+		
+		this.id = obj.getId();
+		this.descricao = obj.getDescricao();
+		this.preco = obj.getPreco();
+    }
 }

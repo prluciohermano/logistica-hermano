@@ -29,8 +29,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "TB_PRODUTO")
-public class ProdutoModel implements Serializable {
+@Table(name = "TB_VEICULO")
+public class Veiculo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +38,8 @@ public class ProdutoModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "descProduto", length = 100)
-	//@NotEmpty(message = "O campo descrição do Produto é obrigatorio")
+	@Column(name = "descricao", length = 100)
+	//@NotEmpty(message = "O campo descrição do Veículo é obrigatorio")
 	private String descricao;
 	
 	@Column(length = 20)
@@ -47,19 +47,19 @@ public class ProdutoModel implements Serializable {
 	private String placaCar;
 	
 	@Column(length = 20)
-	//@NotEmpty(message = "O campo ano modelo do Produto é obrigatorio")
+	//@NotEmpty(message = "O campo ano modelo do Veículo é obrigatorio")
 	private String anoModelo;
 	
 	@Column(length = 20)
-	//@NotEmpty(message = "O campo cor do Produto é obrigatorio")
-	private String corProduto;
+	//@NotEmpty(message = "O campo cor do Veículo é obrigatorio")
+	private String corVeiculo;
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	//@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime dataEntrada;
 
 	@Column(name = "preco_entrada")
-	//@NotNull(message = "O campo preço de entrada do Produto é obrigatorio")
+	//@NotNull(message = "O campo preço de entrada do Veículo é obrigatorio")
 	private BigDecimal precoEntrada;
 	
 //	@JsonIgnore
@@ -70,11 +70,14 @@ public class ProdutoModel implements Serializable {
 //	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "pessoa_id")
-    private PessoaModel pessoaModel;
+    private Pessoa pessoa;
 	
 	 
-	@OneToMany(mappedBy = "produtoModel")
+	@OneToMany(mappedBy = "veiculo")
 	@JsonIgnore
 	private Set<GarageBoxModel> garageBox = new HashSet<>();
+
+
+
 	
 }

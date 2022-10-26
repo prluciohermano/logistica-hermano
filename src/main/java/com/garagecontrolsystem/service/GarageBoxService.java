@@ -12,8 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
-import com.garagecontrolsystem.entity.PessoaModel;
-import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.entity.Pessoa;
+import com.garagecontrolsystem.entity.Veiculo;
 import com.garagecontrolsystem.repository.GarageBoxRepository;
 
 @Service

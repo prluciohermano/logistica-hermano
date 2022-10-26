@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.repository.PessoaRepository;
 
 @Service
@@ -25,23 +25,23 @@ public class PessoaService {
 	}
 	
 	@Transactional
-    public PessoaModel save(PessoaModel pessoa) {
+    public Pessoa save(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
     }
 	
-	public Page<PessoaModel> findAll(Pageable pageable) {
+	public Page<Pessoa> findAll(Pageable pageable) {
 		return pessoaRepository.findAll(pageable);
 	}
 	
-	public Optional<PessoaModel> findById(Long id) {
+	public Optional<Pessoa> findById(Long id) {
 		return pessoaRepository.findById(id);
 	}
 	
-	public Page<PessoaModel> findAll() {
+	public Page<Pessoa> findAll() {
 		return pessoaRepository.findAll(PageRequest.of(0, 10, Sort.by("nome")));
 	}
 	
-	public List<PessoaModel> findByOrderByNome() {
+	public List<Pessoa> findByOrderByNome() {
 		return pessoaRepository.findByOrderByNome();
 	}
 
@@ -50,23 +50,23 @@ public class PessoaService {
 		pessoaRepository.deleteById(pessoaId);
 	}
 
-	public List<PessoaModel> findPessoaByName(String nameBusca) {
+	public List<Pessoa> findPessoaByName(String nameBusca) {
 		return pessoaRepository.findPessoaByName(nameBusca);
 	}
 	
-	public List<PessoaModel> findPessoaByNameSexo(String nameBusca, String sexo) {
+	public List<Pessoa> findPessoaByNameSexo(String nameBusca, String sexo) {
 		return pessoaRepository.findPessoaByNameSexo(nameBusca, sexo);
 	}
 
-	public List<PessoaModel> findPessoaBySexo(String pesqsexo) {
+	public List<Pessoa> findPessoaBySexo(String pesqsexo) {
 		return pessoaRepository.findPessoaBySexo(pesqsexo);
 	}
 
-	public Page<PessoaModel> findPessoaByNamePage(String nameBusca, Pageable pageable) {
+	public Page<Pessoa> findPessoaByNamePage(String nameBusca, Pageable pageable) {
 		return pessoaRepository.findPessoaByNamePage(nameBusca, pageable);
 	}
 
-	public Page<PessoaModel> findPessoaBySexoPage(String nameBusca, String pesqsexo, Pageable pageable) {
+	public Page<Pessoa> findPessoaBySexoPage(String nameBusca, String pesqsexo, Pageable pageable) {
 		return pessoaRepository.findPessoaBySexoPage(nameBusca, pesqsexo, pageable);
 	}
 

@@ -2,7 +2,7 @@ package com.garagecontrolsystem.dto;
 
 import java.util.Date;
 
-import com.garagecontrolsystem.entity.PessoaModel;
+import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.enums.Cargo;
 
@@ -33,7 +33,7 @@ public class PessoaDTO {
 	private Cargo cargo;
        
     
-	public PessoaDTO(PessoaModel obj) {
+	public PessoaDTO(Pessoa obj) {
 		
 		this.id = obj.getId();
 		this.nome = obj.getNome();

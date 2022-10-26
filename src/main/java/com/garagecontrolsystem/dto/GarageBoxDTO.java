@@ -7,8 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.garagecontrolsystem.entity.GarageBoxModel;
-import com.garagecontrolsystem.entity.PessoaModel;
-import com.garagecontrolsystem.entity.ProdutoModel;
+import com.garagecontrolsystem.entity.Pessoa;
+import com.garagecontrolsystem.entity.Veiculo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class GarageBoxDTO {
 	private String numeroBox;
 	
 	@NotBlank
-	private ProdutoModel produtoModel;
+	private Veiculo veiculo;
 	
 	@NotBlank
 	private String defeitoCar;
@@ -42,7 +42,7 @@ public class GarageBoxDTO {
 		this.defeitoCar = obj.getDefeitoCar();
 		this.entradaCar = obj.getEntradaCar();
 		this.mecanicoCar = obj.getMecanicoCar();
-		this.produtoModel = obj.getProdutoModel();
+		this.veiculo = obj.getVeiculo();
 	}
 }
 
