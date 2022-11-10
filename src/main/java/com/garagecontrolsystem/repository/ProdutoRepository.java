@@ -14,8 +14,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
 	List<Produto> findByOrderByDescricao();
 
-	@Query(value = "select p from Produto p where upper(trim(p.descricao)) like %?1% order by descricao")
-	List<Produto> findProdutoByDescricao(String nameBusca);
+	@Query(value = "select p from Produto p where upper(trim(p.nomeProduto)) like %?1% order by nomeProduto")
+	List<Produto> findProdutoByNome(String nameBusca);
 
 
 }

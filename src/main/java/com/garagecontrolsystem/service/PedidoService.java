@@ -12,4 +12,5 @@ public interface PedidoService {
 	Optional<Pedido> obterPedidoCompleto(Long id);
 	
 	void atualizarStatus(Long id, StatusPedido statusPedido);
+
 }

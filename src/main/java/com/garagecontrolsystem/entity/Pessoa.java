@@ -1,7 +1,6 @@
 package com.garagecontrolsystem.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -114,4 +114,8 @@ public class Pessoa implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Cargo cargo;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "pessoa")
+    private List<Servico> servico;
 }
+

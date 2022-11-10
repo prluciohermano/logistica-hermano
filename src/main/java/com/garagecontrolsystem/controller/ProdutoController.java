@@ -118,9 +118,9 @@ public class ProdutoController {
 	
 	@RequestMapping("/nameBusca") //----------------------------------------- Buscar por nome ---
 	@ResponseBody
-	public ResponseEntity<List<ProdutoDTO>> buscarPorDescricao(@RequestParam(name="nome") String nameBusca) {
+	public ResponseEntity<List<ProdutoDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
 								
-		List<Produto> list = produtoRepository.findProdutoByDescricao(nameBusca.trim().toUpperCase());
+		List<Produto> list = produtoRepository.findProdutoByNome(nameBusca.trim().toUpperCase());
 		List<ProdutoDTO> listDTO = list.stream()
 									  .map(obj -> new ProdutoDTO(obj)).collect(Collectors.toList());
 		return new ResponseEntity<List<ProdutoDTO>>(listDTO, HttpStatus.OK);

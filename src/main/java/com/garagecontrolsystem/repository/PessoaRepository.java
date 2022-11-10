@@ -23,7 +23,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	List<Pessoa> findPessoaByNameSexo(String nome, String sexo);
 
 	
-	Optional<Pessoa> findById(Long id);
+	
 
 	public List<Pessoa> findByOrderByNome();
 	

@@ -37,6 +37,10 @@ public class PessoaService {
 		return pessoaRepository.findById(id);
 	}
 	
+	public Optional<Pessoa> findByIdPessoa(Long id) {
+		return pessoaRepository.findById(id);
+	}
+	
 	public Page<Pessoa> findAll() {
 		return pessoaRepository.findAll(PageRequest.of(0, 10, Sort.by("nome")));
 	}
@@ -69,6 +73,7 @@ public class PessoaService {
 	public Page<Pessoa> findPessoaBySexoPage(String nameBusca, String pesqsexo, Pageable pageable) {
 		return pessoaRepository.findPessoaBySexoPage(nameBusca, pesqsexo, pageable);
 	}
+
 
 }
 

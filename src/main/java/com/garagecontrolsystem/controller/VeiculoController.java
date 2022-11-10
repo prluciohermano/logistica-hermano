@@ -68,7 +68,8 @@ public class VeiculoController {
 			@RequestBody @Valid GarageBoxModel garageBoxModel, GarageBoxDTO garageBoxDTO){
 		
 		if(garageBoxRepository.existsByNumeroBox(garageBoxDTO.getNumeroBox())) {
-			return null;}
+			return null;
+		}
 		
 		garageBoxModel.setEntradaCar(LocalDateTime.now(ZoneId.of("UTC")));
 		
@@ -126,7 +127,8 @@ public class VeiculoController {
 	}
 	
 	@DeleteMapping("/{id}") /* ******************************************** Deletar Veículo por ID */
-	public ResponseEntity<VeiculoDTO> delete(@PathVariable Long id){veiculoService.delete(id);
+	public ResponseEntity<VeiculoDTO> delete(@PathVariable Long id){
+		veiculoService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
