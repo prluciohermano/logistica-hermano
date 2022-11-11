@@ -24,6 +24,7 @@ public class ServicoDTO {
     private LocalDateTime dataInicialServico;
     private LocalDateTime dataFinalServico;
     private BigDecimal precoServico;
+    private BigDecimal total;
     private Pessoa pessoa;
     private List<ItemServico> produtos;
     
@@ -38,6 +39,7 @@ public class ServicoDTO {
 		this.dataInicialServico = obj.getDataInicialServico();
 		this.dataFinalServico = obj.getDataFinalServico();
 		this.precoServico = obj.getPrecoServico();
+		this.total = obj.getTotal();
 		this.pessoa = obj.getPessoa();
 		this.produtos = obj.getItens();
 	}

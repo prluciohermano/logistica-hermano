@@ -95,6 +95,8 @@ public class ServicoService {
 			
 			itemServico.setServico(servico.get());
 			
+			servico.get().setTotal(servico.get().getPrecoServico()); 
+			
 			itemServicoRepository.save(itemServico);
 			return ResponseEntity.status(HttpStatus.CREATED).body(itemServico);
 		}

@@ -54,8 +54,9 @@ public class Produto {
 	@NotNull(message = "{campo.preco.obrigatorio}")
 	private BigDecimal preco;
 	
+	
 	@JsonIgnore
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<ItemServico> itens;
 	
 	public List<ItemServico> getItens() {

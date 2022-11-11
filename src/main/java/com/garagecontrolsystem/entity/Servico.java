@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,13 +56,16 @@ public class Servico {
 	@Column(name = "preco_servico")
 	private BigDecimal precoServico;
 	
+	@Column(name = "total")
+	private BigDecimal total;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 	
 	
-	@OneToMany(mappedBy = "servico")
+	@OneToMany(mappedBy = "servico", cascade = CascadeType.ALL)
 	private List<ItemServico> itens;
 	
 	public List<ItemServico> getItens() {

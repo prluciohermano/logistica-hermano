@@ -1,5 +1,7 @@
 package com.garagecontrolsystem.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.transaction.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import springfox.documentation.spring.web.json.Json;
 
 @Data
 @AllArgsConstructor
@@ -40,6 +40,9 @@ public class ItemServico {
 
     @Column
     private Long quantidade;
+    
+	@Column(name = "subtotal")
+	private BigDecimal subtotal;
 
  
 }
