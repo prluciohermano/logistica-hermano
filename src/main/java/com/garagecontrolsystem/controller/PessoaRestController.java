@@ -26,6 +26,7 @@ import com.garagecontrolsystem.dto.PessoaDTO;
 import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.service.PessoaService;
+import com.lowagie.text.DocumentException;
 
 @CrossOrigin("*")
 @RestController
@@ -102,10 +103,19 @@ public class PessoaRestController {
 									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return new ResponseEntity<List<PessoaDTO>>(listDTO, HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}/imprimirPDF") //------------------------------------------ Buscar Todos ---	
+	public ResponseEntity<Pessoa> imprimirPDF(@PathVariable Long id) throws DocumentException{
+		
+		Optional<Pessoa> pessoa = pessoaService.findById(id);
+		
+//		Relatorio relatorioSimples = new RelatorioPDFSimples(pessoa.get());
+//		relatorioSimples.gerarCabecalho();
+//		relatorioSimples.imprimir();
+		
+		return ResponseEntity.ok().body(pessoa.get());
+		
+		
+	}
 		
 }
-
-
-
-
-

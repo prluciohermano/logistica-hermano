@@ -1,8 +1,10 @@
 package com.garagecontrolsystem.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import com.garagecontrolsystem.entity.Pessoa;
+import com.garagecontrolsystem.entity.TelefoneModel;
 import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.enums.Cargo;
 
@@ -31,6 +33,7 @@ public class PessoaDTO {
     private String email;
 	private TipoPessoaModel tipospessoa;
 	private Cargo cargo;
+	private List<TelefoneModel> telefones;
        
     
 	public PessoaDTO(Pessoa obj) {
@@ -51,6 +54,7 @@ public class PessoaDTO {
 		this.email = obj.getEmail();
 		this.tipospessoa = obj.getTipospessoa();
 		this.cargo = obj.getCargo();
+		this.telefones = obj.getTelefones();
 	}
 
 

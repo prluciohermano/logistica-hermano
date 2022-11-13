@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 //@SpringBootApplication
 @Controller
@@ -14,6 +14,7 @@ public class LogisticaHermanoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogisticaHermanoApplication.class, args);
+
 	}
 	
 	@RequestMapping ("/")
