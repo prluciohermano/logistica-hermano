@@ -20,6 +20,9 @@ public interface ServicoRepository extends JpaRepository<Servico, Long>{
 
 	ItemServico save(ItemServico iServico);
 
+	@Query(value = "select p from Servico p order by dataInicialServico")
+	List<Servico> findByOrderByData();
+
 	//ItemServico save(ItemServico iServico);
 
 	//void deleteById(Long id);

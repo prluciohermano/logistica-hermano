@@ -22,12 +22,11 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	@Query(value = "select p from Pessoa p where upper(trim(p.nome)) like %?1% and p.sexo = ?2 order by nome")
 	List<Pessoa> findPessoaByNameSexo(String nome, String sexo);
 
-	
-	
 
 	public List<Pessoa> findByOrderByNome();
 	
-	
+	@Query(value = "select count(*) as p from Pessoa p")
+	Long findPessoaByEstado();
 	
 
 	@Query(value = "select p from Pessoa p where p.sexo =  ?1")
@@ -64,6 +63,8 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 		Page<Pessoa> pessoas = findAll(example, pageable);
 		return pessoas;
 	}
+
+	
 
 	
 }

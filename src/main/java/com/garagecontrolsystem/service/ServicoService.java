@@ -46,7 +46,10 @@ public class ServicoService {
 
 	public List<Servico> findByOrderByDescricao() {
 		return servicoRepository.findByOrderByDescricao();
-		
+	}
+	
+	public List<Servico> findByOrderByData() {
+		return servicoRepository.findByOrderByData();
 	}
 
 	public List<Servico> findServicoByDescricao(String nameBusca) {
@@ -103,6 +106,7 @@ public class ServicoService {
 		
 		return ResponseEntity.notFound().build();
 	}
+
 
 }
 

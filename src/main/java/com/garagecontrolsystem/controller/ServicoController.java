@@ -111,6 +111,17 @@ public class ServicoController {
 			
 	}
 	
+	@GetMapping("/meses") /* **************************************** Buscar Serviço por data */
+	@ApiOperation("Busca todos os serviços dos últimos 6 meses")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Serviços encontrados com sucesso"),
+			@ApiResponse(code = 400, message = "Erro de validação") })
+	public ResponseEntity<List<Servico>> findByOrderByData(){
+		List<Servico> list = servicoService.findByOrderByData();
+		return ResponseEntity.ok(list);
+			
+	}
+	
+	
 	@RequestMapping("/nameBusca") //----------------------------------------- Buscar por nome ---
 	@ResponseBody
 	public ResponseEntity<List<ServicoDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {

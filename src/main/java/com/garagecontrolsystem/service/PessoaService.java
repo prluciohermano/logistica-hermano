@@ -49,6 +49,10 @@ public class PessoaService {
 		return pessoaRepository.findByOrderByNome();
 	}
 
+	public Long findPessoaByEstado() {
+		return pessoaRepository.findPessoaByEstado();
+	}
+	
 	@Transactional
 	public void deleteById(Long pessoaId) {
 		pessoaRepository.deleteById(pessoaId);
@@ -73,6 +77,8 @@ public class PessoaService {
 	public Page<Pessoa> findPessoaBySexoPage(String nameBusca, String pesqsexo, Pageable pageable) {
 		return pessoaRepository.findPessoaBySexoPage(nameBusca, pesqsexo, pageable);
 	}
+
+
 
 
 }

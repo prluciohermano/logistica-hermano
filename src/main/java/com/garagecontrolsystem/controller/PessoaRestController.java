@@ -57,6 +57,15 @@ public class PessoaRestController {
 									  .map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
+	
+	@GetMapping("/estados") //---------------------------------------------=====----- Buscar Todos ---
+	@ResponseBody
+	public Long findPessoaByEstado(){	
+		
+		Long list = pessoaService.findPessoaByEstado();
+		
+		return list;
+	}
 
 	
 	@GetMapping("/{id}") //------------------------------------------------ Buscar ---
