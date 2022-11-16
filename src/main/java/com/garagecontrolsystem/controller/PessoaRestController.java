@@ -28,17 +28,27 @@ import com.garagecontrolsystem.entity.TipoPessoaModel;
 import com.garagecontrolsystem.service.PessoaService;
 import com.lowagie.text.DocumentException;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/pessoas")
+@Api("Api de Pessoas")
 public class PessoaRestController {
 	
 	@Autowired
 	private PessoaService pessoaService;
 	
 	
-	@PostMapping //------------------------------------------------------ Salvar ---
+	@PostMapping
 	@ResponseBody
+	@ApiOperation("Salvar uma pessoa")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Pessoa salva com sucesso"),
+							@ApiResponse(code = 403, message = "Acesso não autorizado"),
+							@ApiResponse(code = 400, message = "Erro de validação")})
 	public ResponseEntity<Pessoa> savePessoa(@RequestBody @Valid Pessoa pessoa){
 		
 		Pessoa pes = pessoaService.save(pessoa);
@@ -46,8 +56,12 @@ public class PessoaRestController {
 		return new ResponseEntity<Pessoa>(pes, HttpStatus.OK);
 	}
 
-	@GetMapping //---------------------------------------------=====----- Buscar Todos ---
+	@GetMapping
 	@ResponseBody
+	@ApiOperation("Obter detalhes de uma pessoa")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Pessoa encontrada"),
+							@ApiResponse(code = 403, message = "Acesso não autorizado"),
+							@ApiResponse(code = 404, message = "Pessoa não encontrada")})
 	public ResponseEntity<List<PessoaDTO>> findByOrderByNome(){	
 		
 		TipoPessoaModel tipo = new TipoPessoaModel();

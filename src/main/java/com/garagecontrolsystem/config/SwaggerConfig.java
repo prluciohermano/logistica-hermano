@@ -25,7 +25,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("io.github.prluciohermano.rest.controller"))
+                        .basePackage("com.garagecontrolsystem.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(securityContext()))

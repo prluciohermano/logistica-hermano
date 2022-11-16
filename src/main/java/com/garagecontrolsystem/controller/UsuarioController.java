@@ -1,65 +1,64 @@
-//package com.garagecontrolsystem.controller;
-//
-//import javax.validation.Valid;
-//
-//import org.springframework.http.HttpStatus;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//
-//import javax.validation.Valid;
-//
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.ResponseStatus;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.garagecontrolsystem.entity.Usuario;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.validation.FieldError;
-//import org.springframework.web.bind.MethodArgumentNotValidException;
-//import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.ExceptionHandler;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.ResponseStatus;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.garagecontrolsystem.dto.UsuarioDTO;
-//import com.garagecontrolsystem.entity.Usuario;
-//
-//
-//import lombok.RequiredArgsConstructor;
-//
-//
-//@RestController
-//@RequestMapping("/usuarios")
-//@RequiredArgsConstructor
-//public class UsuarioController {
-//	
-//	private final UsuarioServiceImpl usuarioService;
-//	private final PasswordEncoder passwordEncoder;
-//	
-//	
-//	@PostMapping
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public Usuario salvar(@RequestBody @Valid Usuario usuario) {
-//		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
-//		usuario.setSenha(senhaCriptografada);
-//		return usuarioService.salvar(usuario);
-//		
-//	}
-//	
-//	
+package com.garagecontrolsystem.controller;
+
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.garagecontrolsystem.dto.CredenciaisDTO;
+import com.garagecontrolsystem.dto.TokenDTO;
+import com.garagecontrolsystem.entity.Usuario;
+import com.garagecontrolsystem.exception.SenhaInvalidaException;
+import com.garagecontrolsystem.security.jwt.JwtService;
+import com.garagecontrolsystem.service.impl.UsuarioServiceImpl;
+
+
+import lombok.RequiredArgsConstructor;
+
+
+@RestController
+@CrossOrigin("*")
+@RequestMapping("/usuarios")
+@RequiredArgsConstructor
+public class UsuarioController {
+	
+    private final UsuarioServiceImpl usuarioService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+	
+	
+	@PostMapping("/criar")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Usuario salvar(@RequestBody @Valid Usuario usuario) {
+		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+		usuario.setSenha(senhaCriptografada);
+		return usuarioService.salvar(usuario);
+	}
+	
+    @PostMapping("/auth")
+    public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
+        try{
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
+            @SuppressWarnings("unused")
+			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
+            String token = jwtService.gerarToken(usuario);
+            return new TokenDTO(usuario.getLogin(), token);
+        } catch (UsernameNotFoundException | SenhaInvalidaException e ){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+	
 //	
 //	
 //		
@@ -115,4 +114,4 @@
 //		});
 //		return errors;
 //	}
-//}
+}
