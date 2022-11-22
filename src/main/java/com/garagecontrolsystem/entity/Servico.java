@@ -3,6 +3,7 @@ package com.garagecontrolsystem.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -47,11 +48,11 @@ public class Servico {
 	@Column(length = 255)
 	private String observacoes;
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime dataInicialServico;
+	@Column
+	private Date dataInicialServico;
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime dataFinalServico;
+	@Column
+	private Date dataFinalServico;
 
 	@Column(name = "preco_servico")
 	private BigDecimal precoServico;

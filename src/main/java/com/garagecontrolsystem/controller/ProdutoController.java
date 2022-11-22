@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,33 +83,10 @@ public class ProdutoController {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada"));
 	}
 
-//	@GetMapping
-//	@ApiOperation("Busca produtos por parâmetros")
-//	@ApiResponses({
-//		@ApiResponse(code = 200, message = "Produto encontrado com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
-//	public List<Produto> find(Produto filtro){
-//		ExampleMatcher matcher = ExampleMatcher
-//				.matching()
-//				.withIgnoreCase()
-//				.withStringMatcher(
-//						ExampleMatcher.StringMatcher.CONTAINING);
-//		Example example = Example.of(filtro, matcher);
-//		return produtoRepository.findAll(example);
-//	}
-
-//	@GetMapping /* ************************************************ Busca todos os produtos */
-//	@ApiOperation("Busca todos os produtos")
-//	@ApiResponses({ @ApiResponse(code = 200, message = "Pessoas encontrados com sucesso"),
-//			@ApiResponse(code = 400, message = "Erro de validação") })
-//	public List<Produto> findAll() {
-//		return produtoRepository.findAll();
-//	}
 	
-	@GetMapping /* **************************************** Buscar Veículo por ordem de descrição */
+	@GetMapping /* **************************************** Buscar Produto por ordem de descrição */
 	@ApiOperation("Busca todos os produtos")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Pessoas encontrados com sucesso"),
+	@ApiResponses({ @ApiResponse(code = 200, message = "Produtos encontrados com sucesso"),
 			@ApiResponse(code = 400, message = "Erro de validação") })
 	public ResponseEntity<List<Produto>> findByOrderByDescricao(){
 		List<Produto> list = produtoRepository.findByOrderByDescricao();
@@ -118,7 +94,7 @@ public class ProdutoController {
 			
 	}
 	
-	@RequestMapping("/nameBusca") //----------------------------------------- Buscar por nome ---
+	@RequestMapping("/nameBusca") //--------------------------- Buscar Produto por nome ---
 	@ResponseBody
 	public ResponseEntity<List<ProdutoDTO>> buscarPorNome(@RequestParam(name="nome") String nameBusca) {
 								

@@ -3,6 +3,7 @@ package com.garagecontrolsystem.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,16 +57,16 @@ public class Veiculo implements Serializable {
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	//@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime dataEntrada;
+	private Date dataEntrada;
 
 	@Column(name = "preco_entrada")
 	//@NotNull(message = "O campo preço de entrada do Veículo é obrigatorio")
 	private BigDecimal precoEntrada;
 	
-//	@JsonIgnore
+  //@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
-	private CategoriaModel categoria;
+	private Categoria categoria;
 	
 //	@JsonIgnore
 	@ManyToOne

@@ -10,39 +10,42 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.dto.CategoriaDTO;
-import com.garagecontrolsystem.entity.CategoriaModel;
+import com.garagecontrolsystem.entity.Categoria;
 import com.garagecontrolsystem.repository.CategoriaRepository;
 import com.garagecontrolsystem.service.exceptions.ObjectNotFoundException;
 
 @Service
-@Transactional
 public class CategoriaService {
-
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	public CategoriaModel findById(Long id) {
-		Optional<CategoriaModel> obj = categoriaRepository.findById(id);
+
+	public Categoria findById(Long id) {
+		Optional<Categoria> obj = categoriaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Categoria não encontrada! Id: " + id + ", Tipo: " + CategoriaModel.class.getName()));
+				"Categoria não encontrada! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
-	public List<CategoriaModel> findAll() {
+	public List<Categoria> findAll() {
 		return categoriaRepository.findAll();
 	}
 
-	public CategoriaModel create(CategoriaModel obj) {
+	@Transactional
+	public Categoria create(Categoria obj) {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
 	}
 
-	public CategoriaModel update(Long id, CategoriaDTO objDTO) {
-		CategoriaModel obj = findById(id);
+	@Transactional
+	public Categoria update(Long id, CategoriaDTO objDTO) {
+		Categoria obj = findById(id);
 		obj.setNome(objDTO.getNome());
 		obj.setDescricao(objDTO.getDescricao());
 		return categoriaRepository.save(obj);
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		findById(id);
 		try {

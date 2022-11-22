@@ -13,6 +13,8 @@ import com.garagecontrolsystem.exception.ApiErrors;
 import com.garagecontrolsystem.exception.PedidoNaoEncontradoException;
 import com.garagecontrolsystem.exception.RegraNegocioException;
 
+import io.jsonwebtoken.SignatureException;
+
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
@@ -21,6 +23,12 @@ public class ApplicationControllerAdvice {
     public ApiErrors handleRegraNegocioException(RegraNegocioException ex){
         String mensagemErro = ex.getMessage();
         return new ApiErrors(mensagemErro);
+    }
+    
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
+    public ApiErrors handleRegraNegocioException(SignatureException ex){
+        return new ApiErrors(ex.getMessage());
     }
 
     @ExceptionHandler(PedidoNaoEncontradoException.class)

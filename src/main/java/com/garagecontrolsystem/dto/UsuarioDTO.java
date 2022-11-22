@@ -1,22 +1,23 @@
 package com.garagecontrolsystem.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
 
-@Getter
-@Setter
-public class UsuarioDTO {
-	private String login;
-	private String email;
-	private String senha;
+import com.garagecontrolsystem.entity.Usuario;
+
+import lombok.Data;
+
+@Data
+public class UsuarioDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	private String nomeUsuario;
 	
-	public UsuarioDTO(String login, String email, String senha) {
-		this.login = login;
-		this.email = email;
-		this.senha = senha;
+
+	public UsuarioDTO(Usuario usuario) {
+		this.nomeUsuario = usuario.getNome();
+		this.id = usuario.getId();
 	}
-	
-	
-
+    
 }

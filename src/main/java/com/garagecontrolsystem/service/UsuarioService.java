@@ -1,73 +1,91 @@
 //package com.garagecontrolsystem.service;
 //
-//import java.util.List;
+//import javax.transaction.Transactional;
 //
-//import javax.validation.Valid;
-//
-//import org.springframework.http.ResponseEntity;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Service;
 //
-//import com.garagecontrolsystem.dto.UsuarioDTO;
 //import com.garagecontrolsystem.entity.Usuario;
 //import com.garagecontrolsystem.repository.UsuarioRepository;
-//import com.garagecontrolsystem.security.TokenUtil;
+//import com.garagecontrolsystem.service.exceptions.ObjectNotFoundException;
+//import com.garagecontrolsystem.service.impl.UsuarioServiceImpl;
 //
 //@Service
 //public class UsuarioService {
 //	
-//	private UsuarioRepository usuarioRepository;
-//	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	UsuarioServiceImpl usuarioService;
+//    
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 //	
-//	public UsuarioService(UsuarioRepository usuarioRepository) {
-//		this.usuarioRepository = usuarioRepository;
-//		this.passwordEncoder = new BCryptPasswordEncoder();
-//	}
+//	@Autowired
+//	UsuarioRepository usuarioRepository;
+//	
 //
 //	
-//	public List<Usuario> listaTodos() {
-//		return usuarioRepository.findAll();
+//	
+//	private BCryptPasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
 //	}
-//
-//	public Usuario salvarUsuario(Usuario usuario) {
-//		String encoder = this.passwordEncoder.encode(usuario.getSenha());
-//		usuario.setSenha(encoder);
-//		return usuarioRepository.save(usuario);
-//	}
-//
-//	public Usuario editarUsuario(Usuario usuario) {
-//		String encoder = this.passwordEncoder.encode(usuario.getSenha());
-//		usuario.setSenha(encoder);
-//		return usuarioRepository.save(usuario);
-//	}
-//
-//	public ResponseEntity<Usuario> deleteById(Long id) {
-//		if(usuarioRepository.existsById(id)) {
-//			usuarioRepository.deleteById(id);
-//			return ResponseEntity.noContent().build();
-//		}
-//		return ResponseEntity.notFound().build();
-//	}
-//
-//
-//	@SuppressWarnings("deprecation")
-//	public Boolean validarSenha(Usuario usuario) {
-//		String senha = usuarioRepository.getById(usuario.getId()).getSenha();
-//		Boolean valid = passwordEncoder.matches(usuario.getSenha(), senha);
-//		return valid;
-//	}
-//
-//
-//	public Token gerarToken(@Valid UsuarioDTO usuario) {
-//		Usuario user = usuarioRepository.findByNomeOrEmail(usuario.getLogin(), usuario.getEmail());
-//		if(user != null) {
-//			Boolean valid = passwordEncoder.matches(usuario.getSenha(), user.getSenha());
-//			if(valid) {
-//				return new Token(TokenUtil.createToken(user));
-//			}
+//	
+//	@Transactional
+//	public Usuario salvar(Usuario usuario) {
+//		Usuario existsUser = usuarioRepository.findByLogin(usuario.getLogin());
+//		
+//		System.out.println(existsUser);
+//		
+//		if (existsUser != null) {
+//			throw new ObjectNotFoundException("Usuário Já existe!");
 //		}
 //		
+//		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+//		usuario.setSenha(senhaCriptografada);
+//		usuario.setSenha(passwordEncoder().encode(usuario.getSenha()));
+//		Usuario createdUser = usuarioRepository.save(usuario);
+//		return usuario;
+//		
+//	}
+	 
+
+//	public Usuario logar(Usuario usuario) {
+//		
+//		Usuario existsUser = usuarioRepository.login(usuario.getLogin(), usuario.getSenha());
+//		
+//		System.out.println(existsUser + "Entrou aqui");
+//		
+//		return usuarioRepository.login(usuario.getLogin(), usuario.getSenha());
+//	}
+//	
+	
+	
+	
+//	
+//	public User logar(User user) {
+//		
+//		
+//		User existsUser = userRepository.findByUsername(user.getUsername());
+//		User existsPass = userRepository.findByPassword(user.getPassword());
+//		
+//		
+////		if (existsPass == null && existsUser == null) {
+////			
+////			throw new Error("Usuário ou senha não existem!");
+////		}
+//		
+//		System.out.println(existsUser);
+//		System.out.println(existsPass);
+//		
+//		//User createdUser = userRepository.save(user);
+//		
+//		return null;
+//	
+//	}
+//
+//	public Optional<User> buscarPorEmail(java.lang.String username) {
+//		// TODO Auto-generated method stub
 //		return null;
 //	}
 //}

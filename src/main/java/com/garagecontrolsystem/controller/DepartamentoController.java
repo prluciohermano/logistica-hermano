@@ -21,26 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.garagecontrolsystem.entity.Departamento;
 import com.garagecontrolsystem.service.DepartamentoService;
 
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiOperation;
-//import io.swagger.annotations.ApiParam;
-//import io.swagger.annotations.ApiResponse;
-//import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/departamentos")
-//@Api("Api Departamentos")
+@Api("Api Departamentos")
 public class DepartamentoController {
 	
 	@Autowired
 	private DepartamentoService departamentoService;
 			
 	@GetMapping("/{id}")  /* ***************************************** Buscar pessoa por ID */
-//	@ApiOperation("Obter detalhes de um Departamento pelo ID")
-//	@ApiResponses({
-//		@ApiResponse(code = 200, message = "Departamento encontrado"),
-//		@ApiResponse(code = 404, message = "Departamento não encontrado para o ID informado")
-//	})
+	@ApiOperation("Obter detalhes de um Departamento pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Departamento encontrado"),
+		@ApiResponse(code = 404, message = "Departamento não encontrado para o ID informado")
+	})
 	public ResponseEntity<Departamento> findById ( 
 			@PathVariable("id") Long id) {
 		return departamentoService.findById(id);
@@ -49,11 +49,11 @@ public class DepartamentoController {
 	
 	@PostMapping  /* *****************************************************  Salvar pessoa */
 	@ResponseStatus(HttpStatus.CREATED)
-//	@ApiOperation("Cria um novo Departamento")
-//	@ApiResponses({
-//		@ApiResponse(code = 201, message = "Departamento salvo com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
+	@ApiOperation("Cria um novo Departamento")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "Departamento salvo com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	public Departamento save( @RequestBody @Valid Departamento departamento ) {
 		return departamentoService.save(departamento);
 	}
@@ -61,11 +61,11 @@ public class DepartamentoController {
 	
 	@DeleteMapping("/{id}")  /* ********************************************* Deletar Pessoa */
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	@ApiOperation("Deleta um Departamento")
-//	@ApiResponses({
-//		@ApiResponse(code = 204, message = "Departamento deletadao com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
+	@ApiOperation("Deleta um Departamento")
+	@ApiResponses({
+		@ApiResponse(code = 204, message = "Departamento deletadao com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	public ResponseEntity<Departamento> deleteById( @PathVariable Long id) {
 		return departamentoService.deleteById(id);
 	}
@@ -73,11 +73,11 @@ public class DepartamentoController {
 	
 	@PutMapping("/{id}")  /* ********************** Atualizar um Pessoa */
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	@ApiOperation("Altera os dados de um Departamento")
-//	@ApiResponses({
-//		@ApiResponse(code = 204, message = "Departamento alterado com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
+	@ApiOperation("Altera os dados de um Departamento")
+	@ApiResponses({
+		@ApiResponse(code = 204, message = "Departamento alterado com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	public ResponseEntity<Departamento> update( @PathVariable Long id,
 			@RequestBody @Valid Departamento pessoa){
 			return departamentoService.updateById(id, pessoa);
@@ -86,11 +86,11 @@ public class DepartamentoController {
 	 /* ******************************* Busca pessoa por nome */
 	
 	@GetMapping(value = "buscarPorDepartamento") /* mapeia a url */
-//	@ApiOperation("Busca um departamento")
-//	@ApiResponses({
-//		@ApiResponse(code = 200, message = "Departamento encontrado com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
+	@ApiOperation("Busca um departamento")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Departamento encontrado com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	
 	public ResponseEntity<List<Departamento>> buscarPorNome(@RequestParam(name = "nome") String nome) { /* Recebe os dados para consultar */
 
@@ -101,11 +101,11 @@ public class DepartamentoController {
 	}
 	
 	@GetMapping /* ************************************************ Busca todos as Pessoas */
-//	@ApiOperation("Busca todos os Departamentos")
-//	@ApiResponses({
-//		@ApiResponse(code = 200, message = "Pessoas encontradas com sucesso"),
-//		@ApiResponse(code = 400, message = "Erro de validação")
-//	})
+	@ApiOperation("Busca todos os Departamentos")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Pessoas encontradas com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	    public List<Departamento> findAll(){
 			return departamentoService.findAll();
 		}

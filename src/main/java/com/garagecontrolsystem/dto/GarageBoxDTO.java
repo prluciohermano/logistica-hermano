@@ -1,6 +1,5 @@
 package com.garagecontrolsystem.dto;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
@@ -30,7 +29,7 @@ public class GarageBoxDTO {
 	private String defeitoCar;
 	
 	@NotBlank
-	private LocalDateTime entradaCar;
+	private Date entradaCar;
 	
 	@NotBlank
 	private String mecanicoCar;

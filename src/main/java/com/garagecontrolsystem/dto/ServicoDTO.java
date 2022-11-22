@@ -1,13 +1,11 @@
 package com.garagecontrolsystem.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.garagecontrolsystem.entity.ItemServico;
 import com.garagecontrolsystem.entity.Pessoa;
-import com.garagecontrolsystem.entity.Produto;
 import com.garagecontrolsystem.entity.Servico;
 
 import lombok.Data;
@@ -21,8 +19,8 @@ public class ServicoDTO {
     private String garantia;
     private String defeito;
     private String observacoes;
-    private LocalDateTime dataInicialServico;
-    private LocalDateTime dataFinalServico;
+    private Date dataInicialServico;
+    private Date dataFinalServico;
     private BigDecimal precoServico;
     private BigDecimal total;
     private Pessoa pessoa;

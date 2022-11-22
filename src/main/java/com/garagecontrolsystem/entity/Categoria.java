@@ -1,5 +1,6 @@
 package com.garagecontrolsystem.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "TB_CATEGORIA")
-public class CategoriaModel {
+public class Categoria implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -40,14 +43,14 @@ public class CategoriaModel {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "categoria")
-	private List<Veiculo> produtos = new ArrayList<>();
+	private List<Veiculo> veiculos = new ArrayList<>();
 	
 	
-	public List<Veiculo> getProdutos() {
-		return produtos;
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
 	}
 
-	public void setProdutos(List<Veiculo> produtos) {
-		this.produtos = produtos;
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.garagecontrolsystem.dto.VeiculoDTO;
-import com.garagecontrolsystem.entity.CategoriaModel;
+import com.garagecontrolsystem.entity.Categoria;
 import com.garagecontrolsystem.entity.GarageBoxModel;
 import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.Veiculo;
@@ -42,7 +42,7 @@ public class VeiculoService {
 	@Transactional
 	public Veiculo create(Long id_cat, Veiculo obj) {
 		obj.setId(null);
-		CategoriaModel cat = categoriaService.findById(id_cat);
+		Categoria cat = categoriaService.findById(id_cat);
 		obj.setCategoria(cat);
 		return veiculoRepository.save(obj);
 	}

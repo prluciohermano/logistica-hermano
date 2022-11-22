@@ -2,6 +2,7 @@ package com.garagecontrolsystem.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,7 @@ public class ServicoController {
 	@ResponseBody
 	public ResponseEntity<Servico> saveServico(@RequestBody @Valid Servico servico){
 		
-		servico.setDataInicialServico(LocalDateTime.now(ZoneId.of("UTC")));
+		servico.setDataInicialServico(new Date());
 		Servico pro = servicoService.save(servico);
 		return new ResponseEntity<Servico>(pro, HttpStatus.OK);
 	}

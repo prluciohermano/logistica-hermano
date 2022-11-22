@@ -16,36 +16,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.garagecontrolsystem.dto.CategoriaDTO;
-import com.garagecontrolsystem.entity.CategoriaModel;
+import com.garagecontrolsystem.entity.Categoria;
 import com.garagecontrolsystem.service.CategoriaService;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/categorias")
-public class CategoriaRestController {
+public class CategoriaController {
 	
 	@Autowired
 	private CategoriaService categoriaService;
 	
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaModel> findById(@PathVariable Long id){
-		CategoriaModel obj = categoriaService.findById(id);
+	@ResponseBody
+	public ResponseEntity<Categoria> findById(@PathVariable Long id){
+		Categoria obj = categoriaService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@GetMapping
+	@ResponseBody
 	public ResponseEntity<List<CategoriaDTO>> findAll(){
-		List<CategoriaModel> list = categoriaService.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		
+		List<Categoria> list = categoriaService.findAll();
+		List<CategoriaDTO> listDTO = list.stream()
+							.map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<CategoriaModel> create(@Valid @RequestBody CategoriaModel obj){
+	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj){
 		obj = categoriaService.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -53,7 +59,7 @@ public class CategoriaRestController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> update(@Valid @PathVariable Long id, @RequestBody CategoriaDTO objDTO){
-		CategoriaModel newObj = categoriaService.update(id, objDTO);
+		Categoria newObj = categoriaService.update(id, objDTO);
 		return ResponseEntity.ok().body(new CategoriaDTO(newObj));
 		
 	}

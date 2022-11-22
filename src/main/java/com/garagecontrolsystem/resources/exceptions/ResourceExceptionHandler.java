@@ -6,6 +6,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.garagecontrolsystem.service.exceptions.ObjectNotFoundException;
 import com.garagecontrolsystem.service.exceptions.ValidationError;
+
+import io.jsonwebtoken.SignatureException;
 
 @RestControllerAdvice
 public class ResourceExceptionHandler {
@@ -57,4 +60,5 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
+	
 }

@@ -2,8 +2,8 @@ package com.garagecontrolsystem.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -54,7 +54,7 @@ public class VeiculoController {
 	@ResponseBody
 	public ResponseEntity<Veiculo> saveVeiculo(@RequestBody @Valid Veiculo veiculo){
 		
-		veiculo.setDataEntrada(LocalDateTime.now(ZoneId.of("UTC")));
+		veiculo.setDataEntrada(new Date());
 				
 		Veiculo pro = veiculoService.save(veiculo);
 		
@@ -71,7 +71,7 @@ public class VeiculoController {
 			return null;
 		}
 		
-		garageBoxModel.setEntradaCar(LocalDateTime.now(ZoneId.of("UTC")));
+		garageBoxModel.setEntradaCar(new Date());
 		
 		
 		

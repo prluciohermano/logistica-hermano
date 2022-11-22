@@ -1,59 +1,48 @@
 package com.garagecontrolsystem;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.stereotype.Controller;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication
-@Controller
-//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-public class LogisticaHermanoApplication {
+@EntityScan(basePackages = {"com.garagecontrolsystem.entity"})
+@ComponentScan(basePackages = {"com.garagecontrolsystem"})
+@EnableJpaRepositories(basePackages = {"com.garagecontrolsystem.repository"})
+@EnableTransactionManagement
+@EnableWebMvc
+@RestController
+@EnableAutoConfiguration
+@EnableCaching
+public class LogisticaHermanoApplication implements WebMvcConfigurer  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogisticaHermanoApplication.class, args);
+		//System.out.println(new BCryptPasswordEncoder().encode("2201"));
 
 	}
 	
-	@RequestMapping ("/")
-	public String index() {
-		return "index.html";
-	}
-
-	@RequestMapping ("/login")
-	public String login() {
-		return "login.html";
-	}
+	 /*Mapeamento Global que refletem em todo o sistema*/
 	
-	@RequestMapping ("/listapessoas")
-	public String listapessoas() {
-		return "restrito/listapessoas.html";
-	}
-	
-//	@RequestMapping ("/pessoas")
-//	public String pessoas() {
-//		return "restrito/pessoas.html";
-//	}
-	
-	@RequestMapping ("/restrito/arearestrita")
-	public String restrito() {
-		return "restrito/arearestrita.html";
-	}
-	
-	@RequestMapping ("/arearestrita")
-	public String restritoo() {
-		return "restrito/arearestrita.html";
-	}
-	
-//	@RequestMapping ("/removerpessoa/**")
-//	public String remover() {
-//		return "restrito/listapessoas.html";
-//	}
-//	
-	
+		@Override
+		public void addCorsMappings(CorsRegistry registry) {
+			
+			registry.addMapping("/**")
+			.allowedMethods("*") // POST, GET
+			.allowedOrigins("*");
+			
+			/*Liberando o mapeamento de usuario para todas as origens*/
+			
+		}
 }
 
-
-//System.out.println(new BCryptPasswordEncoder().encode("senha"));
