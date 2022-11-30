@@ -24,9 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.garagecontrolsystem.dto.PessoaDTO;
 import com.garagecontrolsystem.dto.UsuarioDTO;
+import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.Usuario;
 import com.garagecontrolsystem.repository.UsuarioRepository;
 import com.garagecontrolsystem.service.ImplementacaoUserDetailsService;
@@ -49,6 +53,7 @@ public class UsuarioController {
 	@Autowired
 	private final ImplementacaoUserDetailsService usuarioService;
 	
+	@Autowired 
 	private final PasswordEncoder passEncoder;
 	
 
@@ -112,6 +117,14 @@ public class UsuarioController {
 		}
 		usuarioService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído com sucesso!");		
+	}
+	
+	@RequestMapping("/fotoPerfil") //----------------------------------------- Buscar por nome ---
+	@ResponseBody
+	public ResponseEntity<UsuarioDTO> buscarPorLogin(@RequestParam(name="userLogado") String nameBusca) {
+		Optional<Usuario> usuario =  usuarioRepository.findByLogin(nameBusca.trim().toUpperCase());						
+			
+		return new ResponseEntity<UsuarioDTO>(new UsuarioDTO(usuario.get()), HttpStatus.OK);
 	}
 }	
 	

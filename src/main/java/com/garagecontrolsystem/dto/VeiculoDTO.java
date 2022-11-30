@@ -1,7 +1,6 @@
 package com.garagecontrolsystem.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.garagecontrolsystem.entity.Categoria;
@@ -25,6 +24,7 @@ public class VeiculoDTO {
 	private BigDecimal precoEntrada;
 	private Categoria categoria;
 	private Pessoa pessoa;
+	
 
 	
 	public VeiculoDTO(Veiculo promod) {

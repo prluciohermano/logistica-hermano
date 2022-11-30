@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -72,6 +73,10 @@ public class Veiculo implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "veiculo")
+    private List<Servico> servico;
 	
 	 
 	@OneToMany(mappedBy = "veiculo")

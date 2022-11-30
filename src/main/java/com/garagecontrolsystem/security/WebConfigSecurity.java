@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -19,7 +20,7 @@ import com.garagecontrolsystem.service.ImplementacaoUserDetailsService;
 
 
 
-///*Mapeaia URL, enderecos, autoriza ou bloqueia acessoa a URL*/
+///*Mapeaia URL, enderecos, autoriza ou bloqueia acessos a URL*/
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -28,23 +29,13 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers(
-    		
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**");
-}
+
 	
-	/*Configura as solicitações de acesso por Http*/
+	/*Configura as solicitações de acesso por Http */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		/*Ativando a proteção contra usuário que não estão validados por TOKEN*/
+		/*Ativando a proteção contra usuário que não estão validados por TOKEN */
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 		
 		/*Ativando a permissão para acesso a página incial do sistema EX: sistema.com.br/index*/
@@ -52,15 +43,20 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		
 		.antMatchers("/index").permitAll()
 		
-		/* Vários clientes entrando*/
+		.antMatchers("/swagger-ui.html").permitAll()
+		
+		/* Vários clientes entrando */
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		
 		
 		/*URL de Logout - Redireciona após o user deslogar do sistema*/
 		.anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
 		
-		/*Maperia URL de Logout e invalida o usuário*/
+		/*Mapeia URL de Logout e invalida o usuário*/
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		
+		.and()
+      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		
 		/*Filtra requisições de login para autenticação*/
 		.and().addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), 
@@ -88,6 +84,17 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers(
+    		
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**");
+	}
 
 
 }

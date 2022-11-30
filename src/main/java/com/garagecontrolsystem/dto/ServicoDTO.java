@@ -7,6 +7,7 @@ import java.util.List;
 import com.garagecontrolsystem.entity.ItemServico;
 import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.Servico;
+import com.garagecontrolsystem.entity.Veiculo;
 
 import lombok.Data;
 
@@ -24,6 +25,8 @@ public class ServicoDTO {
     private BigDecimal precoServico;
     private BigDecimal total;
     private Pessoa pessoa;
+    private String nomePessoa;
+    private Veiculo veiculo;
     private List<ItemServico> produtos;
     
     
@@ -39,7 +42,9 @@ public class ServicoDTO {
 		this.precoServico = obj.getPrecoServico();
 		this.total = obj.getTotal();
 		this.pessoa = obj.getPessoa();
+		this.nomePessoa = obj.getNomePessoa();
 		this.produtos = obj.getItens();
+		this.veiculo = obj.getVeiculo();
 	}
     
 }

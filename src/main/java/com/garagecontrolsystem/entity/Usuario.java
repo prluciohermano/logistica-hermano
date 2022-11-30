@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
@@ -67,9 +68,11 @@ public class Usuario implements UserDetails {
     
     @Column
     private String token;
+        
+    @Column(columnDefinition = "text")
+    private String imagem;
+
     
-    @Lob
-    private byte[] imagem;
     
     //@JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)

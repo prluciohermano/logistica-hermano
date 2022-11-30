@@ -60,6 +60,13 @@ public class Servico {
 	@Column(name = "total")
 	private BigDecimal total;
 	
+	@ManyToOne
+	@JoinColumn(name = "veiculo_id")
+	private Veiculo veiculo;
+	
+	@Column
+	private String nomePessoa;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
