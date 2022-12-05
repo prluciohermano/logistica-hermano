@@ -1,7 +1,5 @@
 package com.garagecontrolsystem.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.garagecontrolsystem.dto.GarageBoxDTO;
 import com.garagecontrolsystem.dto.VeiculoDTO;
 import com.garagecontrolsystem.entity.GarageBoxModel;
-import com.garagecontrolsystem.entity.Pessoa;
 import com.garagecontrolsystem.entity.Veiculo;
 import com.garagecontrolsystem.repository.GarageBoxRepository;
 import com.garagecontrolsystem.service.VeiculoService;

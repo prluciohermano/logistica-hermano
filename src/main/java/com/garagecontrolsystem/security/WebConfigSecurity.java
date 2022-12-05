@@ -21,6 +21,7 @@ import com.garagecontrolsystem.service.ImplementacaoUserDetailsService;
 
 
 ///*Mapeaia URL, enderecos, autoriza ou bloqueia acessos a URL*/
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -29,8 +30,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 	
-
-	
+		
 	/*Configura as solicitações de acesso por Http */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -42,8 +42,6 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		.disable().authorizeRequests().antMatchers("/").permitAll()
 		
 		.antMatchers("/index").permitAll()
-		
-		.antMatchers("/swagger-ui.html").permitAll()
 		
 		/* Vários clientes entrando */
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -78,7 +76,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	.passwordEncoder(new BCryptPasswordEncoder());
 	
 	}
-	
+		
 	@Bean
 	public BCryptPasswordEncoder passEncoder() {
 		return new BCryptPasswordEncoder();
@@ -92,7 +90,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
             "/configuration/ui",
             "/swagger-resources/**",
             "/configuration/security",
-            "/swagger-ui.html",
+            "/swagger-ui.html/**",
             "/webjars/**");
 	}
 

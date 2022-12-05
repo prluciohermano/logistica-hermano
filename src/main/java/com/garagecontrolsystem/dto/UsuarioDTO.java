@@ -14,12 +14,14 @@ public class UsuarioDTO implements Serializable {
 	private Long id;
 	private String nomeUsuario;
 	private String imagem;
+	private boolean perfil;
 	
 
 	public UsuarioDTO(Usuario usuario) {
 		this.nomeUsuario = usuario.getNome();
 		this.id = usuario.getId();
 		this.imagem = usuario.getImagem();
+		this.perfil = usuario.isAdmin();
 	}
     
 }

@@ -40,7 +40,7 @@ public class JWTTokenAutenticacaoService {
 		
 		/*Montagem do Token*/
 		String JWT = Jwts.builder() /*Chama o gerador de Token*/
-				        .setSubject(username) /*Adicona o usuario*/
+				        .setSubject(username) /*Adiciona o usuario*/
 				        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) /*Tempo de expiração*/
 				        .signWith(SignatureAlgorithm.HS512, SECRET).compact(); /*Compactação e algoritmos de geração de senha*/
 		
@@ -76,9 +76,9 @@ public class JWTTokenAutenticacaoService {
 				String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
 				
 				/*Faz a validação do token do usuário na requisição*/
-				String user = Jwts.parser().setSigningKey(SECRET) /*Bearer 87878we8we787w8e78w78e78w7e87w*/
-									.parseClaimsJws(tokenLimpo) /*87878we8we787w8e78w78e78w7e87w*/
-									.getBody().getSubject(); /*João Silva*/
+				String user = Jwts.parser().setSigningKey(SECRET) 
+									.parseClaimsJws(tokenLimpo) 
+									.getBody().getSubject(); 
 				if (user != null) {
 					
 					Usuario usuario = ApplicationContextLoad.getApplicationContext()
